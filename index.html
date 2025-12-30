@@ -93,7 +93,6 @@
   .likee{background:linear-gradient(45deg,#ff512f,#dd2476)}
   .vimeo{background:#1ab7ea}
 
-  /* Install badge */
   #install-badge{
     position:fixed;
     bottom:18px;
@@ -171,41 +170,40 @@
   </div>
 </div>
 
-<!-- Install badge -->
-<div id="install-badge">➕ Install Desisavar</div>
+<div id="install-badge">📲 Install Desisavar</div>
 
 <script>
-  // Register Service Worker
+  // Service Worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
 
-  let deferredPrompt = null;
+  let installPromptEvent = null;
   const badge = document.getElementById("install-badge");
 
-  // fallback: badge visible by default
+  // Show badge by default
   badge.style.display = "block";
 
-  // When browser allows install
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
-    deferredPrompt = e;
+    installPromptEvent = e;
   });
 
-  // click = try install
   badge.addEventListener("click", async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
+    if (installPromptEvent) {
+      installPromptEvent.prompt();
+      await installPromptEvent.userChoice;
+      installPromptEvent = null;
     } else {
       alert(
-        "If install popup does not show:\n\n1️⃣ Open in Chrome\n2️⃣ Menu (⋮)\n3️⃣ Add to Home Screen"
+        "If install popup does not show:\n\n" +
+        "1️⃣ Open in Chrome\n" +
+        "2️⃣ Menu (⋮)\n" +
+        "3️⃣ Add to Home Screen"
       );
     }
   });
 
-  // hide when installed
   window.addEventListener("appinstalled", () => {
     badge.style.display = "none";
   });
