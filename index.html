@@ -176,29 +176,38 @@
 
 <script>
   // Register Service Worker
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js');
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
   }
 
-  // Install badge logic
-  let deferredPrompt;
+  let deferredPrompt = null;
   const badge = document.getElementById("install-badge");
 
+  // fallback: badge visible by default
+  badge.style.display = "block";
+
+  // When browser allows install
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-
-    badge.style.display = "block";
   });
 
+  // click = try install
   badge.addEventListener("click", async () => {
-    if (!deferredPrompt) return;
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    } else {
+      alert(
+        "If install popup does not show:\n\n1️⃣ Open in Chrome\n2️⃣ Menu (⋮)\n3️⃣ Add to Home Screen"
+      );
+    }
+  });
 
+  // hide when installed
+  window.addEventListener("appinstalled", () => {
     badge.style.display = "none";
-    deferredPrompt.prompt();
-
-    await deferredPrompt.userChoice;
-    deferredPrompt = null;
   });
 </script>
 
