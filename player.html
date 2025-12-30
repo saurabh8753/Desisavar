@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Desisavar</title>
+
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#3248f5">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    font-family: Inter, Arial, sans-serif;
+    background:linear-gradient(180deg,#e8ecff,#f8f9ff);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  header{
+    width:100%;
+    padding:18px 0;
+    background:#3248f5;
+    color:#fff;
+    text-align:center;
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:.3px;
+    box-shadow:0 5px 20px rgba(0,0,0,.12);
+  }
+
+  .wrapper{
+    width:100%;
+    max-width:520px;
+    padding:20px 14px 80px;
+  }
+
+  .card{
+    background:#fff;
+    border-radius:16px;
+    padding:20px;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+
+  .btn{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    border-radius:12px;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    font-size:15px;
+    position:relative;
+    overflow:hidden;
+    transition:.25s;
+  }
+
+  .btn i{font-size:18px}
+
+  .btn::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:12px;
+    box-shadow:0 0 0 0 rgba(255,255,255,.6);
+    opacity:0;
+    transition:.35s ease;
+  }
+
+  .btn:hover{transform:translateY(-2px) scale(1.01)}
+  .btn:hover::after{opacity:1;box-shadow:0 0 18px 4px rgba(255,255,255,.7)}
+
+  .terabox{background:#5b6bff}
+  .instagram{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
+  .youtube{background:#ff0000}
+  .facebook{background:#1877f2}
+  .twitter{background:#000000}
+  .tiktok{background:#111}
+  .snapchat{background:#fffc00;color:#000}
+  .pinterest{background:#e60023}
+  .likee{background:linear-gradient(45deg,#ff512f,#dd2476)}
+  .vimeo{background:#1ab7ea}
+
+  /* Install badge */
+  #install-badge{
+    position:fixed;
+    bottom:18px;
+    right:18px;
+    background:#3248f5;
+    color:#fff;
+    padding:10px 14px;
+    border-radius:30px;
+    font-weight:700;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+    display:none;
+    cursor:pointer;
+    z-index:99;
+  }
+</style>
+</head>
+
+<body>
+
+<header>Desisavar</header>
+
+<div class="wrapper">
+  <div class="card">
+
+    <a class="btn terabox" href="https://example.com/terabox" target="_blank">
+      <i class="fa-solid fa-cloud-arrow-down"></i>
+      Terabox Downloader
+    </a>
+
+    <a class="btn instagram" href="https://example.com/instagram" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+      Instagram Downloader
+    </a>
+
+    <a class="btn youtube" href="https://example.com/youtube" target="_blank">
+      <i class="fa-brands fa-youtube"></i>
+      YouTube Downloader
+    </a>
+
+    <a class="btn facebook" href="https://example.com/facebook" target="_blank">
+      <i class="fa-brands fa-facebook-f"></i>
+      Facebook Downloader
+    </a>
+
+    <a class="btn twitter" href="https://example.com/twitter" target="_blank">
+      <i class="fa-brands fa-x-twitter"></i>
+      Twitter (X) Downloader
+    </a>
+
+    <a class="btn tiktok" href="https://example.com/tiktok" target="_blank">
+      <i class="fa-brands fa-tiktok"></i>
+      TikTok Downloader
+    </a>
+
+    <a class="btn snapchat" href="https://example.com/snapchat" target="_blank">
+      <i class="fa-brands fa-snapchat"></i>
+      Snapchat Downloader
+    </a>
+
+    <a class="btn pinterest" href="https://example.com/pinterest" target="_blank">
+      <i class="fa-brands fa-pinterest"></i>
+      Pinterest Downloader
+    </a>
+
+    <a class="btn likee" href="https://example.com/likee" target="_blank">
+      <i class="fa-solid fa-heart"></i>
+      Likee Downloader
+    </a>
+
+    <a class="btn vimeo" href="https://example.com/vimeo" target="_blank">
+      <i class="fa-brands fa-vimeo-v"></i>
+      Vimeo Downloader
+    </a>
+
+  </div>
+</div>
+
+<!-- Install badge -->
+<div id="install-badge">➕ Install Desisavar</div>
+
+<script>
+  // Register Service Worker
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+
+  let deferredPrompt = null;
+  const badge = document.getElementById("install-badge");
+
+  // fallback: badge visible by default
+  badge.style.display = "block";
+
+  // When browser allows install
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // click = try install
+  badge.addEventListener("click", async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      await deferredPrompt.userChoice;
+      deferredPrompt = null;
+    } else {
+      alert(
+        "If install popup does not show:\n\n1️⃣ Open in Chrome\n2️⃣ Menu (⋮)\n3️⃣ Add to Home Screen"
+      );
+    }
+  });
+
+  // hide when installed
+  window.addEventListener("appinstalled", () => {
+    badge.style.display = "none";
+  });
+</script>
+
+</body>
+</html>
