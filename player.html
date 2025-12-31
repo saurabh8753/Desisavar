@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -90,10 +89,11 @@
   .tiktok{background:#111}
   .snapchat{background:#fffc00;color:#000}
   .pinterest{background:#e60023}
-  .likee{background:linear-gradient(45deg,#ff512f,#dd2476)}
-  .vimeo{background:#1ab7ea}
 
-  /* Install badge */
+  /* NEW buttons */
+  .whatsapp{background:#25D366}
+  .telegram{background:#229ED9}
+
   #install-badge{
     position:fixed;
     bottom:18px;
@@ -123,89 +123,89 @@
       Terabox Downloader
     </a>
 
-    <a class="btn instagram" href="https://example.com/instagram" target="_blank">
+    <a class="btn instagram" href="https://igram.world" target="_blank">
       <i class="fa-brands fa-instagram"></i>
       Instagram Downloader
     </a>
 
-    <a class="btn youtube" href="https://example.com/youtube" target="_blank">
+    <a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank">
       <i class="fa-brands fa-youtube"></i>
       YouTube Downloader
     </a>
 
-    <a class="btn facebook" href="https://example.com/facebook" target="_blank">
+    <a class="btn facebook" href="https://snapsave.app/" target="_blank">
       <i class="fa-brands fa-facebook-f"></i>
       Facebook Downloader
     </a>
 
-    <a class="btn twitter" href="https://example.com/twitter" target="_blank">
+    <a class="btn twitter" href="https://sssx.io/" target="_blank">
       <i class="fa-brands fa-x-twitter"></i>
       Twitter (X) Downloader
     </a>
 
-    <a class="btn tiktok" href="https://example.com/tiktok" target="_blank">
+    <a class="btn tiktok" href="https://ssstik.io/in" target="_blank">
       <i class="fa-brands fa-tiktok"></i>
       TikTok Downloader
     </a>
 
-    <a class="btn snapchat" href="https://example.com/snapchat" target="_blank">
+    <a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank">
       <i class="fa-brands fa-snapchat"></i>
       Snapchat Downloader
     </a>
 
-    <a class="btn pinterest" href="https://example.com/pinterest" target="_blank">
+    <a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
       <i class="fa-brands fa-pinterest"></i>
       Pinterest Downloader
     </a>
 
-    <a class="btn likee" href="https://example.com/likee" target="_blank">
-      <i class="fa-solid fa-heart"></i>
-      Likee Downloader
+    <!-- WhatsApp (NEW) -->
+    <a class="btn whatsapp" href="https://wastatus.save" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i>
+      WhatsApp Status Downloader
     </a>
 
-    <a class="btn vimeo" href="https://example.com/vimeo" target="_blank">
-      <i class="fa-brands fa-vimeo-v"></i>
-      Vimeo Downloader
+    <!-- Telegram (NEW) -->
+    <a class="btn telegram" href="https://tgdownloader.com" target="_blank">
+      <i class="fa-brands fa-telegram"></i>
+      Telegram Downloader
     </a>
 
   </div>
 </div>
 
-<!-- Install badge -->
-<div id="install-badge">➕ Install Desisavar</div>
+<div id="install-badge">📲 Install Desisavar App</div>
 
 <script>
-  // Register Service Worker
+  // Service Worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
 
-  let deferredPrompt = null;
+  let installPromptEvent = null;
   const badge = document.getElementById("install-badge");
 
-  // fallback: badge visible by default
   badge.style.display = "block";
 
-  // When browser allows install
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
-    deferredPrompt = e;
+    installPromptEvent = e;
   });
 
-  // click = try install
   badge.addEventListener("click", async () => {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      deferredPrompt = null;
+    if (installPromptEvent) {
+      installPromptEvent.prompt();
+      await installPromptEvent.userChoice;
+      installPromptEvent = null;
     } else {
       alert(
-        "If install popup does not show:\n\n1️⃣ Open in Chrome\n2️⃣ Menu (⋮)\n3️⃣ Add to Home Screen"
+        "If install popup does not show:\n\n" +
+        "1️⃣ Open in Chrome\n" +
+        "2️⃣ Menu (⋮)\n" +
+        "3️⃣ Add to Home Screen"
       );
     }
   });
 
-  // hide when installed
   window.addEventListener("appinstalled", () => {
     badge.style.display = "none";
   });
