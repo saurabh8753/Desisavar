@@ -89,25 +89,8 @@
   .tiktok{background:#111}
   .snapchat{background:#fffc00;color:#000}
   .pinterest{background:#e60023}
-
-  /* NEW buttons */
   .whatsapp{background:#25D366}
   .telegram{background:#229ED9}
-
-  #install-badge{
-    position:fixed;
-    bottom:18px;
-    right:18px;
-    background:#3248f5;
-    color:#fff;
-    padding:10px 14px;
-    border-radius:30px;
-    font-weight:700;
-    box-shadow:0 10px 25px rgba(0,0,0,.25);
-    display:none;
-    cursor:pointer;
-    z-index:99;
-  }
 </style>
 </head>
 
@@ -158,57 +141,24 @@
       Pinterest Downloader
     </a>
 
-    <!-- WhatsApp (NEW) -->
-    <a class="btn whatsapp" href="https://wastatus.save" target="_blank">
+    <a class="btn whatsapp" href="https://groupda.com" target="_blank">
       <i class="fa-brands fa-whatsapp"></i>
-      WhatsApp Status Downloader
+      WhatsApp Groups Link
     </a>
 
-    <!-- Telegram (NEW) -->
-    <a class="btn telegram" href="https://tgdownloader.com" target="_blank">
+    <a class="btn telegram" href="https://groupda.com/telegram" target="_blank">
       <i class="fa-brands fa-telegram"></i>
-      Telegram Downloader
+      Telegram Groups Link
     </a>
 
   </div>
 </div>
-
-<div id="install-badge">📲 Install Desisavar App</div>
 
 <script>
   // Service Worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
-
-  let installPromptEvent = null;
-  const badge = document.getElementById("install-badge");
-
-  badge.style.display = "block";
-
-  window.addEventListener("beforeinstallprompt", (e) => {
-    e.preventDefault();
-    installPromptEvent = e;
-  });
-
-  badge.addEventListener("click", async () => {
-    if (installPromptEvent) {
-      installPromptEvent.prompt();
-      await installPromptEvent.userChoice;
-      installPromptEvent = null;
-    } else {
-      alert(
-        "If install popup does not show:\n\n" +
-        "1️⃣ Open in Chrome\n" +
-        "2️⃣ Menu (⋮)\n" +
-        "3️⃣ Add to Home Screen"
-      );
-    }
-  });
-
-  window.addEventListener("appinstalled", () => {
-    badge.style.display = "none";
-  });
 </script>
 
 </body>
