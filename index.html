@@ -101,52 +101,52 @@
 <div class="wrapper">
   <div class="card">
 
-    <a class="btn terabox" href="javascript:void(0)" data-link="https://1024teradownloader.com/">
+    <a class="btn terabox" href="https://1024teradownloader.com/" target="_blank">
       <i class="fa-solid fa-cloud-arrow-down"></i>
       Terabox Video Downloader
     </a>
 
-    <a class="btn instagram" href="javascript:void(0)" data-link="https://igram.world">
+    <a class="btn instagram" href="https://igram.world" target="_blank">
       <i class="fa-brands fa-instagram"></i>
       Instagram Video Downloader
     </a>
 
-    <a class="btn youtube" href="javascript:void(0)" data-link="https://turboscribe.ai/downloader/youtube/video">
+    <a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank">
       <i class="fa-brands fa-youtube"></i>
       YouTube Video Downloader
     </a>
 
-    <a class="btn facebook" href="javascript:void(0)" data-link="https://snapsave.app/">
+    <a class="btn facebook" href="https://snapsave.app/" target="_blank">
       <i class="fa-brands fa-facebook-f"></i>
       Facebook Video Downloader
     </a>
 
-    <a class="btn twitter" href="javascript:void(0)" data-link="https://sssx.io/">
+    <a class="btn twitter" href="https://sssx.io/" target="_blank">
       <i class="fa-brands fa-x-twitter"></i>
       Twitter (X) Downloader
     </a>
 
-    <a class="btn tiktok" href="javascript:void(0)" data-link="https://ssstik.io/in">
+    <a class="btn tiktok" href="https://ssstik.io/in" target="_blank">
       <i class="fa-brands fa-tiktok"></i>
       TikTok Video Downloader
     </a>
 
-    <a class="btn snapchat" href="javascript:void(0)" data-link="https://postsyncer.com/tools/snapchat-video-downloader">
+    <a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank">
       <i class="fa-brands fa-snapchat"></i>
       Snapchat Video Downloader
     </a>
 
-    <a class="btn pinterest" href="javascript:void(0)" data-link="https://pindown.io/en1">
+    <a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
       <i class="fa-brands fa-pinterest"></i>
       Pinterest Video Downloader
     </a>
 
-    <a class="btn whatsapp" href="javascript:void(0)" data-link="https://groupda.com">
+    <a class="btn whatsapp" href="https://groupda.com" target="_blank">
       <i class="fa-brands fa-whatsapp"></i>
       WhatsApp Groups Link
     </a>
 
-    <a class="btn telegram" href="javascript:void(0)" data-link="https://groupda.com/telegram">
+    <a class="btn telegram" href="https://groupda.com/telegram" target="_blank">
       <i class="fa-brands fa-telegram"></i>
       Telegram Groups Link
     </a>
@@ -159,27 +159,6 @@
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
-
-  const AD_LINK =
-    "https://www.effectivegatecpm.com/yvc33vhcr?key=392e8fc7e7a5aa8ee592724f8804ce9a";
-
-  // सभी buttons पर click handler
-  document.querySelectorAll(".btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      const realLink = btn.getAttribute("data-link");
-      if (!realLink) return;
-
-      // 1️⃣ पहले Ad
-      window.open(AD_LINK, "_blank");
-
-      // 2️⃣ फिर 5 seconds बाद असली link
-      setTimeout(() => {
-        window.open(realLink, "_blank");
-      }, 5000);
-    });
-  });
 </script>
 
 </body>
