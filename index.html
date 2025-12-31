@@ -4,11 +4,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Desisavar</title>
 
-<!-- PWA -->
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#3248f5">
 
-<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -66,20 +64,8 @@
     transition:.25s;
   }
 
-  .btn i{font-size:18px}
-
-  .btn::after{
-    content:"";
-    position:absolute;
-    inset:0;
-    border-radius:12px;
-    box-shadow:0 0 0 0 rgba(255,255,255,.6);
-    opacity:0;
-    transition:.35s ease;
-  }
-
   .btn:hover{transform:translateY(-2px) scale(1.01)}
-  .btn:hover::after{opacity:1;box-shadow:0 0 18px 4px rgba(255,255,255,.7)}
+  .btn i{font-size:18px}
 
   .terabox{background:#5b6bff}
   .instagram{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
@@ -91,6 +77,69 @@
   .pinterest{background:#e60023}
   .whatsapp{background:#25D366}
   .telegram{background:#229ED9}
+
+  /* Popup */
+  .unlock-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+    animation:fadeIn .25s ease forwards;
+  }
+
+  .unlock-box{
+    background:#ffffff;
+    padding:20px 18px;
+    border-radius:18px;
+    width:92%;
+    max-width:380px;
+    box-shadow:0 25px 55px rgba(0,0,0,.25);
+    text-align:center;
+    transform:scale(.9);
+    opacity:0;
+    animation:popUp .35s ease forwards;
+  }
+
+  .unlock-primary{
+    background:#3248f5;
+    color:#fff;
+    border:0;
+    padding:10px 14px;
+    border-radius:10px;
+    font-weight:700;
+    width:100%;
+  }
+
+  /* Toast */
+  .toast{
+    position:fixed;
+    top:14px;
+    left:50%;
+    transform:translateX(-50%) translateY(-25px);
+    background:#111827;
+    color:#fff;
+    padding:10px 14px;
+    border-radius:12px;
+    font-size:14px;
+    opacity:0;
+    pointer-events:none;
+    z-index:10000;
+    transition:.35s ease, transform .35s ease;
+  }
+
+  .toast.error{background:#dc2626}
+
+  .toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+  }
+
+  @keyframes popUp{to{transform:scale(1);opacity:1}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 </style>
 </head>
 
@@ -101,52 +150,52 @@
 <div class="wrapper">
   <div class="card">
 
-    <a class="btn terabox" href="https://1024teradownloader.com/" target="_blank">
+    <a class="btn terabox" href="javascript:void(0)" data-link="https://1024teradownloader.com/">
       <i class="fa-solid fa-cloud-arrow-down"></i>
       Terabox Video Downloader
     </a>
 
-    <a class="btn instagram" href="https://igram.world" target="_blank">
+    <a class="btn instagram" href="javascript:void(0)" data-link="https://igram.world">
       <i class="fa-brands fa-instagram"></i>
       Instagram Video Downloader
     </a>
 
-    <a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank">
+    <a class="btn youtube" href="javascript:void(0)" data-link="https://turboscribe.ai/downloader/youtube/video">
       <i class="fa-brands fa-youtube"></i>
       YouTube Video Downloader
     </a>
 
-    <a class="btn facebook" href="https://snapsave.app/" target="_blank">
+    <a class="btn facebook" href="javascript:void(0)" data-link="https://snapsave.app/">
       <i class="fa-brands fa-facebook-f"></i>
       Facebook Video Downloader
     </a>
 
-    <a class="btn twitter" href="https://sssx.io/" target="_blank">
+    <a class="btn twitter" href="javascript:void(0)" data-link="https://sssx.io/">
       <i class="fa-brands fa-x-twitter"></i>
       Twitter (X) Downloader
     </a>
 
-    <a class="btn tiktok" href="https://ssstik.io/in" target="_blank">
+    <a class="btn tiktok" href="javascript:void(0)" data-link="https://ssstik.io/in">
       <i class="fa-brands fa-tiktok"></i>
       TikTok Video Downloader
     </a>
 
-    <a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank">
+    <a class="btn snapchat" href="javascript:void(0)" data-link="https://postsyncer.com/tools/snapchat-video-downloader">
       <i class="fa-brands fa-snapchat"></i>
       Snapchat Video Downloader
     </a>
 
-    <a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
+    <a class="btn pinterest" href="javascript:void(0)" data-link="https://pindown.io/en1">
       <i class="fa-brands fa-pinterest"></i>
       Pinterest Video Downloader
     </a>
 
-    <a class="btn whatsapp" href="https://groupda.com" target="_blank">
+    <a class="btn whatsapp" href="javascript:void(0)" data-link="https://groupda.com">
       <i class="fa-brands fa-whatsapp"></i>
       WhatsApp Groups Link
     </a>
 
-    <a class="btn telegram" href="https://groupda.com/telegram" target="_blank">
+    <a class="btn telegram" href="javascript:void(0)" data-link="https://groupda.com/telegram">
       <i class="fa-brands fa-telegram"></i>
       Telegram Groups Link
     </a>
@@ -154,12 +203,113 @@
   </div>
 </div>
 
+<!-- Unlock Popup -->
+<div id="unlock-popup" class="unlock-overlay">
+  <div class="unlock-box">
+    <h3>Unlock Content 🔓</h3>
+
+    <p>
+      Continue दबाने पर sponsor page खुलेगा — फिर वापस आकर app इस्तेमाल करें।
+    </p>
+
+    <button id="continue-btn" class="unlock-primary">
+      Continue
+    </button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast">
+  ✅ Unlocked successfully
+</div>
+
 <script>
-  // Service Worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
+
+  const popup = document.getElementById("unlock-popup");
+  const continueBtn = document.getElementById("continue-btn");
+  const toast = document.getElementById("toast");
+
+  const AD_LINK =
+    "https://www.effectivegatecpm.com/yvc33vhcr?key=392e8fc7e7a5aa8ee592724f8804ce9a";
+
+  let unlocked = false;
+  let pendingLink = null;
+
+  const today = new Date().toDateString();
+  const lastUnlock = localStorage.getItem("desisavar_unlock_date");
+
+  if (lastUnlock === today) unlocked = true;
+
+  function showToast(text, success = true) {
+    toast.innerText = text;
+    success ? toast.classList.remove("error") : toast.classList.add("error");
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 2500);
+  }
+
+  function isOffline() {
+    return !navigator.onLine;
+  }
+
+  window.addEventListener("offline", () =>
+    showToast("⚠️ You are offline", false)
+  );
+  window.addEventListener("online", () =>
+    showToast("✅ Back online", true)
+  );
+
+  function lockBack() {
+    history.pushState(null, "", location.href);
+    window.onpopstate = () => history.pushState(null, "", location.href);
+  }
+
+  function unlockBack() {
+    window.onpopstate = null;
+  }
+
+  document.querySelectorAll(".btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      if (isOffline()) {
+        showToast("⚠️ Internet connection required", false);
+        return;
+      }
+
+      const link = btn.getAttribute("data-link");
+      if (!link) return;
+
+      if (unlocked) {
+        window.open(link, "_blank");
+        return;
+      }
+
+      pendingLink = link;
+      popup.style.display = "flex";
+      lockBack();
+    });
+  });
+
+  continueBtn.addEventListener("click", () => {
+    if (isOffline()) {
+      showToast("⚠️ Internet connection required", false);
+      return;
+    }
+
+    window.open(AD_LINK, "_blank");
+
+    unlocked = true;
+    localStorage.setItem("desisavar_unlock_date", today);
+
+    popup.style.display = "none";
+    unlockBack();
+
+    showToast("✅ Unlocked successfully", true);
+  });
 </script>
 
 </body>
-</html>
+     </html>
