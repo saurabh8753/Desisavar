@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -90,8 +89,10 @@
   .tiktok{background:#111}
   .snapchat{background:#fffc00;color:#000}
   .pinterest{background:#e60023}
-  .likee{background:linear-gradient(45deg,#ff512f,#dd2476)}
-  .vimeo{background:#1ab7ea}
+
+  /* NEW buttons */
+  .whatsapp{background:#25D366}
+  .telegram{background:#229ED9}
 
   #install-badge{
     position:fixed;
@@ -157,14 +158,16 @@
       Pinterest Downloader
     </a>
 
-    <a class="btn likee" href="https://example.com/likee" target="_blank">
-      <i class="fa-solid fa-heart"></i>
-      Likee Downloader
+    <!-- WhatsApp (NEW) -->
+    <a class="btn whatsapp" href="https://wastatus.save" target="_blank">
+      <i class="fa-brands fa-whatsapp"></i>
+      WhatsApp Status Downloader
     </a>
 
-    <a class="btn vimeo" href="https://example.com/vimeo" target="_blank">
-      <i class="fa-brands fa-vimeo-v"></i>
-      Vimeo Downloader
+    <!-- Telegram (NEW) -->
+    <a class="btn telegram" href="https://tgdownloader.com" target="_blank">
+      <i class="fa-brands fa-telegram"></i>
+      Telegram Downloader
     </a>
 
   </div>
@@ -181,7 +184,6 @@
   let installPromptEvent = null;
   const badge = document.getElementById("install-badge");
 
-  // Show badge by default
   badge.style.display = "block";
 
   window.addEventListener("beforeinstallprompt", (e) => {
@@ -208,7 +210,6 @@
     badge.style.display = "none";
   });
 </script>
-<script async="async" data-cfasync="false" src="https://pl28188629.effectivegatecpm.com/9a259b450791fd97609d22be0d2f1525/invoke.js"></script>
-<div id="container-9a259b450791fd97609d22be0d2f1525"></div>
+
 </body>
 </html>
