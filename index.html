@@ -76,7 +76,7 @@
   .whatsapp{background:#25D366}
   .telegram{background:#229ED9}
 
-  /* ⭐ Install Badge (new animation) */
+  /* ⭐ (NEW) Install Badge styles */
   #promo-badge{
     position:fixed;
     right:14px;
@@ -89,16 +89,12 @@
     box-shadow:0 18px 28px rgba(0,0,0,.28);
     cursor:pointer;
     z-index:9999;
-    display:flex;
-    align-items:center;
-    gap:8px;
+    display:none; /* default hidden */
     animation:badgeBounce 2s infinite;
   }
-
   #promo-badge:hover{
     transform:translateY(-2px) scale(1.04);
   }
-
   @keyframes badgeBounce{
     0%,100%{transform:translateY(0) scale(1)}
     40%{transform:translateY(-5px) scale(1.03)}
@@ -167,7 +163,7 @@
   </div>
 </div>
 
-<!-- ⭐ Install Badge -->
+<!-- ⭐ (NEW) Install badge -->
 <div id="promo-badge">
   📲 Install Desisaver App
 </div>
@@ -178,11 +174,43 @@
     navigator.serviceWorker.register("/sw.js");
   }
 
-  // --- INSTALL BADGE LOGIC ---
+  const AD_LINK =
+    "https://www.effectivegatecpm.com/yvc33vhcr?key=392e8fc7e7a5aa8ee592724f8804ce9a";
+
+  const today = new Date().toDateString();
+  const lastUnlock = localStorage.getItem("desisavar_unlock_date");
+
+  let adShown = lastUnlock === today;
+
+  function isOffline() {
+    return !navigator.onLine;
+  }
+
+  function showAdOnce() {
+    if (adShown) return;
+    if (isOffline()) return;
+
+    adShown = true;
+    localStorage.setItem("desisavar_unlock_date", today);
+
+    // 👇 सिर्फ एक बार ad
+    window.open(AD_LINK, "_blank");
+  }
+
+  // 👉 page पर किसी भी click पर — सिर्फ पहली बार Ad
+  document.addEventListener(
+    "click",
+    () => {
+      showAdOnce();
+    },
+    { capture: true }
+  );
+
+  /* ⭐ (NEW) Install badge logic */
   const badge = document.getElementById("promo-badge");
   let deferredPrompt = null;
 
-  // Detect standalone (installed app) → hide badge
+  // hide if already installed
   const isStandalone =
     window.matchMedia("(display-mode: standalone)").matches ||
     window.navigator.standalone === true;
@@ -191,17 +219,17 @@
     badge.style.display = "none";
   }
 
-  // Capture install prompt
+  // when install available
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    badge.style.display = "flex"; // ensure visible when install available
+    badge.style.display = "flex";
   });
 
-  // Badge click → open install popup
+  // badge click → install popup
   badge.addEventListener("click", async () => {
     if (!deferredPrompt) {
-      alert("If install option doesn’t show:\n\n1️⃣ Open menu (⋮)\n2️⃣ Add to Home Screen");
+      alert("Install ke liye: Menu (⋮) → Add to Home Screen");
       return;
     }
 
