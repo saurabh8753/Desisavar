@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ SEO -->
+  <title>Desisaver App – All Video Downloader | Install PWA</title>
+  <meta name="description" content="Desisaver App – All-in-one video downloader for Terabox, Instagram, YouTube, Facebook, TikTok and more. Install Desisaver PWA app now." />
+  <meta name="keywords" content="desisaver, desisaver app, video downloader app, terabox downloader, instagram video downloader, pwa app" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- ✅ PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#3248f5" />
+
+  <!-- ✅ Icons -->
+  <link rel="icon" href="/icon-192.png" />
+
+  <style>
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:linear-gradient(180deg,#eef2ff,#f9fafb);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+
+    .container{
+      max-width:520px;
+      padding:24px;
+    }
+
+    h1{
+      font-size:32px;
+      margin-bottom:10px;
+      color:#1e293b;
+    }
+
+    p{
+      font-size:16px;
+      color:#475569;
+      margin-bottom:22px;
+    }
+
+    .install-btn{
+      display:inline-block;
+      background:#3248f5;
+      color:#fff;
+      padding:14px 22px;
+      font-size:18px;
+      font-weight:800;
+      border-radius:14px;
+      text-decoration:none;
+      box-shadow:0 18px 30px rgba(50,72,245,.35);
+      transition:.25s;
+    }
+
+    .install-btn:hover{
+      transform:translateY(-3px) scale(1.03);
+    }
+
+    .note{
+      margin-top:18px;
+      font-size:13px;
+      color:#64748b;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>Desisaver App</h1>
+
+  <p>
+    Desisaver is an all-in-one video downloader app for  
+    Terabox, Instagram, YouTube, Facebook, TikTok and more.
+  </p>
+
+  <a href="#" id="installBtn" class="install-btn">
+    📲 Install Desisaver App
+  </a>
+
+  <div class="note">
+    Works best on Google Chrome (Android).
+  </div>
+</div>
+
+<script>
+  let deferredPrompt = null;
+  const installBtn = document.getElementById("installBtn");
+
+  // Register service worker
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("/sw.js");
+  }
+
+  // Capture install event
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    installBtn.style.display = "inline-block";
+  });
+
+  // Install button click
+  installBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    if (!deferredPrompt) {
+      alert(
+        "Install option not available.\n\n" +
+        "Chrome menu (⋮) → Add to Home Screen"
+      );
+      return;
+    }
+
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
+</script>
+
+</body>
+</html>
