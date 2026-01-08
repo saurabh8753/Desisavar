@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ✅ SEO -->
-  <title>Desisaver App – All Video Downloader | Install PWA</title>
-  <meta name="description" content="Desisaver App – All-in-one video downloader for Terabox, Instagram, YouTube, Facebook, TikTok and more. Install Desisaver PWA app now." />
-  <meta name="keywords" content="desisaver, desisaver app, video downloader app, terabox downloader, instagram video downloader, pwa app" />
+  <title>Install Desisaver App | Official PWA</title>
+  <meta name="description" content="Install Desisaver App – Official PWA for downloading videos from Terabox, Instagram, YouTube, Facebook, TikTok and more." />
+  <meta name="keywords" content="desisaver install, desisaver app install, desisaver pwa, video downloader app" />
   <meta name="robots" content="index, follow" />
 
   <!-- ✅ PWA -->
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#3248f5" />
 
-  <!-- ✅ Icons -->
+  <!-- Icons -->
   <link rel="icon" href="/icon-192.png" />
 
   <style>
@@ -26,45 +26,57 @@
       display:flex;
       align-items:center;
       justify-content:center;
+    }
+
+    .box{
+      max-width:520px;
+      padding:26px;
       text-align:center;
     }
 
-    .container{
-      max-width:520px;
-      padding:24px;
-    }
-
     h1{
-      font-size:32px;
-      margin-bottom:10px;
+      font-size:34px;
+      margin-bottom:8px;
       color:#1e293b;
     }
 
     p{
       font-size:16px;
       color:#475569;
-      margin-bottom:22px;
+      margin-bottom:24px;
+      line-height:1.5;
     }
 
     .install-btn{
       display:inline-block;
       background:#3248f5;
       color:#fff;
-      padding:14px 22px;
+      padding:15px 26px;
       font-size:18px;
       font-weight:800;
-      border-radius:14px;
+      border-radius:16px;
       text-decoration:none;
-      box-shadow:0 18px 30px rgba(50,72,245,.35);
+      box-shadow:0 18px 35px rgba(50,72,245,.35);
       transition:.25s;
     }
 
     .install-btn:hover{
-      transform:translateY(-3px) scale(1.03);
+      transform:translateY(-3px) scale(1.04);
+    }
+
+    .features{
+      margin-top:26px;
+      text-align:left;
+      font-size:14px;
+      color:#334155;
+    }
+
+    .features li{
+      margin-bottom:8px;
     }
 
     .note{
-      margin-top:18px;
+      margin-top:20px;
       font-size:13px;
       color:#64748b;
     }
@@ -73,20 +85,28 @@
 
 <body>
 
-<div class="container">
-  <h1>Desisaver App</h1>
+<div class="box">
+  <h1>Install Desisaver App</h1>
 
   <p>
-    Desisaver is an all-in-one video downloader app for  
-    Terabox, Instagram, YouTube, Facebook, TikTok and more.
+    Desisaver is an all-in-one video downloader PWA app.  
+    Install it on your device for faster and smoother access.
   </p>
 
   <a href="#" id="installBtn" class="install-btn">
     📲 Install Desisaver App
   </a>
 
+  <ul class="features">
+    <li>✅ Terabox video downloader</li>
+    <li>✅ Instagram, YouTube, Facebook videos</li>
+    <li>✅ TikTok, Snapchat & Pinterest</li>
+    <li>✅ Fast, lightweight & no Play Store needed</li>
+  </ul>
+
   <div class="note">
-    Works best on Google Chrome (Android).
+    Best supported on Google Chrome (Android).  
+    iPhone users: Safari → Share → Add to Home Screen
   </div>
 </div>
 
@@ -103,10 +123,9 @@
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = "inline-block";
   });
 
-  // Install button click
+  // Button click → install
   installBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
