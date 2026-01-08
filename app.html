@@ -1,131 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ SEO -->
-  <title>Install Desisaver App | Official PWA</title>
-  <meta name="description" content="Install Desisaver App – Official PWA for downloading videos from Terabox, Instagram, YouTube, Facebook, TikTok and more." />
-  <meta name="keywords" content="desisaver install, desisaver app install, desisaver pwa, video downloader app" />
-  <meta name="robots" content="index, follow" />
+<!-- SEO -->
+<title>Install Desisaver App | Official PWA</title>
+<meta name="description" content="Install Desisaver App – Official PWA to download videos from Terabox, Instagram, YouTube, Facebook, TikTok and more." />
+<meta name="keywords" content="desisaver install, desisaver app, desisaver pwa, video downloader app" />
+<meta name="robots" content="index, follow" />
 
-  <!-- ✅ PWA -->
-  <link rel="manifest" href="/manifest.json" />
-  <meta name="theme-color" content="#3248f5" />
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#3248f5" />
 
-  <!-- Icons -->
-  <link rel="icon" href="/icon-192.png" />
+<link rel="icon" href="/icon-192.png" />
 
-  <style>
-    body{
-      margin:0;
-      font-family:Inter,Arial,sans-serif;
-      background:linear-gradient(180deg,#eef2ff,#f9fafb);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
+<style>
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    font-family:Inter,system-ui,Arial,sans-serif;
+    background:linear-gradient(180deg,#eef2ff,#f8fafc);
+    color:#0f172a;
+  }
+
+  .page{
+    max-width:1080px;
+    margin:auto;
+    padding:28px 16px 60px;
+  }
+
+  /* HERO */
+  .hero{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:28px;
+    align-items:center;
+  }
+
+  .hero-card{
+    background:#fff;
+    border-radius:26px;
+    padding:32px 26px;
+    box-shadow:0 30px 60px rgba(0,0,0,.08);
+  }
+
+  .badge{
+    display:inline-block;
+    background:#e0e7ff;
+    color:#1e40af;
+    font-weight:800;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    margin-bottom:14px;
+  }
+
+  h1{
+    font-size:36px;
+    line-height:1.15;
+    margin:0 0 14px;
+  }
+
+  .subtitle{
+    font-size:17px;
+    color:#475569;
+    margin-bottom:26px;
+  }
+
+  .install-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:#3248f5;
+    color:#fff;
+    padding:16px 28px;
+    font-size:18px;
+    font-weight:900;
+    border-radius:18px;
+    text-decoration:none;
+    box-shadow:0 22px 40px rgba(50,72,245,.35);
+    transition:.25s;
+  }
+
+  .install-btn:hover{
+    transform:translateY(-3px) scale(1.04);
+  }
+
+  .note{
+    margin-top:14px;
+    font-size:13px;
+    color:#64748b;
+  }
+
+  /* IMAGE */
+  .hero-image{
+    background:#fff;
+    border-radius:26px;
+    padding:20px;
+    box-shadow:0 30px 60px rgba(0,0,0,.08);
+  }
+
+  .hero-image img{
+    width:100%;
+    max-width:360px;
+    display:block;
+    margin:auto;
+  }
+
+  /* FEATURES */
+  .features{
+    margin-top:60px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:22px;
+  }
+
+  .feature{
+    background:#fff;
+    border-radius:20px;
+    padding:22px;
+    box-shadow:0 15px 35px rgba(0,0,0,.06);
+  }
+
+  .feature h3{
+    margin:0 0 8px;
+    font-size:18px;
+  }
+
+  .feature p{
+    margin:0;
+    font-size:14px;
+    color:#475569;
+    line-height:1.45;
+  }
+
+  /* RESPONSIVE */
+  @media(min-width:900px){
+    .hero{
+      grid-template-columns:1.1fr .9fr;
     }
-
-    .box{
-      max-width:520px;
-      padding:26px;
-      text-align:center;
-    }
-
-    h1{
-      font-size:34px;
-      margin-bottom:8px;
-      color:#1e293b;
-    }
-
-    p{
-      font-size:16px;
-      color:#475569;
-      margin-bottom:24px;
-      line-height:1.5;
-    }
-
-    .install-btn{
-      display:inline-block;
-      background:#3248f5;
-      color:#fff;
-      padding:15px 26px;
-      font-size:18px;
-      font-weight:800;
-      border-radius:16px;
-      text-decoration:none;
-      box-shadow:0 18px 35px rgba(50,72,245,.35);
-      transition:.25s;
-    }
-
-    .install-btn:hover{
-      transform:translateY(-3px) scale(1.04);
-    }
-
-    .features{
-      margin-top:26px;
-      text-align:left;
-      font-size:14px;
-      color:#334155;
-    }
-
-    .features li{
-      margin-bottom:8px;
-    }
-
-    .note{
-      margin-top:20px;
-      font-size:13px;
-      color:#64748b;
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
 
-<div class="box">
-  <h1>Install Desisaver App</h1>
+<div class="page">
 
-  <p>
-    Desisaver is an all-in-one video downloader PWA app.  
-    Install it on your device for faster and smoother access.
-  </p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-card">
+      <span class="badge">Official PWA App</span>
+      <h1>Install Desisaver App</h1>
+      <p class="subtitle">
+        Desisaver is a fast, lightweight all-in-one video downloader PWA.  
+        Install it once and access anytime without Play Store.
+      </p>
 
-  <a href="#" id="installBtn" class="install-btn">
-    📲 Install Desisaver App
-  </a>
+      <a href="#" id="installBtn" class="install-btn">
+        📲 Install Desisaver App
+      </a>
 
-  <ul class="features">
-    <li>✅ Terabox video downloader</li>
-    <li>✅ Instagram, YouTube, Facebook videos</li>
-    <li>✅ TikTok, Snapchat & Pinterest</li>
-    <li>✅ Fast, lightweight & no Play Store needed</li>
-  </ul>
+      <div class="note">
+        Best experience on Google Chrome (Android).  
+        iPhone: Safari → Share → Add to Home Screen
+      </div>
+    </div>
 
-  <div class="note">
-    Best supported on Google Chrome (Android).  
-    iPhone users: Safari → Share → Add to Home Screen
-  </div>
+    <!-- APP IMAGE -->
+    <div class="hero-image">
+      <!-- Replace this image with your own app screenshot later -->
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkOBtJ_CeVQ48_sLVJWyC4m4VwL4loffbYqIRDMUaJRl8hryiP_1DiRA8TAx6buBWwUTrNsD6k3bmfLKsxjsqdV7PavMcPCi3AzBjKUlbjlCiS8tQcXQrytKLBNZVTlj8IP8wBWhdGyZiY_POfw00N4ZNYlnLRGTD6kFcuwq5awkEtDlMA_1h50QRjSqxN/s1600/icon-192.png" alt="Desisaver App Preview">
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="feature">
+      <h3>⚡ Fast & Lightweight</h3>
+      <p>No Play Store needed. Opens instantly and works smoothly.</p>
+    </div>
+
+    <div class="feature">
+      <h3>📥 All Video Platforms</h3>
+      <p>Terabox, Instagram, YouTube, Facebook, TikTok and more.</p>
+    </div>
+
+    <div class="feature">
+      <h3>🔒 Safe PWA Install</h3>
+      <p>Official Progressive Web App. No APK, no risk.</p>
+    </div>
+
+    <div class="feature">
+      <h3>📱 App-Like Experience</h3>
+      <p>Full-screen, offline support and home-screen access.</p>
+    </div>
+  </section>
+
 </div>
 
 <script>
   let deferredPrompt = null;
   const installBtn = document.getElementById("installBtn");
 
-  // Register service worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
 
-  // Capture install event
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
   });
 
-  // Button click → install
   installBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
