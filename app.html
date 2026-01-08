@@ -1,271 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- SEO -->
-<title>Install Desisaver App | Official Video Downloader PWA</title>
-<meta name="description" content="Install Desisaver App – Official PWA video downloader for Terabox, Instagram, YouTube, Facebook, TikTok and more." />
-<meta name="keywords" content="desisaver install, desisaver app, desisaver pwa, video downloader app" />
-<meta name="robots" content="index, follow" />
+  <!-- ✅ SEO -->
+  <title>Desisaver App – All Video Downloader | Install PWA</title>
+  <meta name="description" content="Desisaver App – All-in-one video downloader for Terabox, Instagram, YouTube, Facebook, TikTok and more. Install Desisaver PWA app now." />
+  <meta name="keywords" content="desisaver, desisaver app, video downloader app, terabox downloader, instagram video downloader, pwa app" />
+  <meta name="robots" content="index, follow" />
 
-<!-- PWA -->
-<link rel="manifest" href="/manifest.json" />
-<meta name="theme-color" content="#3248f5" />
+  <!-- ✅ PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#3248f5" />
 
-<!-- BRAND -->
-<link rel="icon" href="/assets/logo.png" />
+  <!-- ✅ Icons -->
+  <link rel="icon" href="/icon-192.png" />
 
-<!-- ANALYTICS (GA4 placeholder) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXX');
-</script>
-
-<style>
-  :root{
-    --brand:#3248f5;
-    --dark:#0f172a;
-    --muted:#475569;
-    --bg:linear-gradient(180deg,#eef2ff,#f8fafc);
-  }
-
-  *{box-sizing:border-box}
-
-  body{
-    margin:0;
-    font-family:Inter,system-ui,Arial,sans-serif;
-    background:var(--bg);
-    color:var(--dark);
-  }
-
-  .page{
-    max-width:1100px;
-    margin:auto;
-    padding:30px 16px 70px;
-  }
-
-  /* HEADER */
-  .top{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    margin-bottom:30px;
-  }
-
-  .logo{
-    width:42px;
-    height:42px;
-    border-radius:10px;
-  }
-
-  .brand{
-    font-size:22px;
-    font-weight:900;
-  }
-
-  /* HERO */
-  .hero{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:30px;
-    align-items:center;
-  }
-
-  .hero-card{
-    background:#fff;
-    border-radius:26px;
-    padding:34px 28px;
-    box-shadow:0 30px 65px rgba(0,0,0,.08);
-  }
-
-  h1{
-    font-size:38px;
-    margin:0 0 14px;
-  }
-
-  .subtitle{
-    font-size:17px;
-    color:var(--muted);
-    margin-bottom:28px;
-    line-height:1.5;
-  }
-
-  .install-btn{
-    display:inline-flex;
-    align-items:center;
-    gap:10px;
-    background:var(--brand);
-    color:#fff;
-    padding:16px 30px;
-    font-size:18px;
-    font-weight:900;
-    border-radius:18px;
-    text-decoration:none;
-    box-shadow:0 24px 45px rgba(50,72,245,.35);
-    transition:.25s;
-  }
-
-  .install-btn:hover{
-    transform:translateY(-3px) scale(1.04);
-  }
-
-  .note{
-    margin-top:14px;
-    font-size:13px;
-    color:#64748b;
-  }
-
-  /* SCREENSHOTS */
-  .screens{
-    background:#fff;
-    border-radius:26px;
-    padding:24px;
-    box-shadow:0 30px 65px rgba(0,0,0,.08);
-    display:flex;
-    gap:18px;
-    overflow-x:auto;
-  }
-
-  .screens img{
-    width:220px;
-    border-radius:18px;
-    box-shadow:0 15px 35px rgba(0,0,0,.15);
-    flex-shrink:0;
-  }
-
-  /* FEATURES */
-  .features{
-    margin-top:70px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-    gap:24px;
-  }
-
-  .feature{
-    background:#fff;
-    border-radius:22px;
-    padding:24px;
-    box-shadow:0 15px 35px rgba(0,0,0,.06);
-  }
-
-  .feature h3{
-    margin:0 0 8px;
-    font-size:18px;
-  }
-
-  .feature p{
-    margin:0;
-    font-size:14px;
-    color:var(--muted);
-    line-height:1.45;
-  }
-
-  @media(min-width:900px){
-    .hero{
-      grid-template-columns:1.1fr .9fr;
+  <style>
+    body{
+      margin:0;
+      font-family:Inter,Arial,sans-serif;
+      background:linear-gradient(180deg,#eef2ff,#f9fafb);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
     }
-  }
-</style>
+
+    .container{
+      max-width:520px;
+      padding:24px;
+    }
+
+    h1{
+      font-size:32px;
+      margin-bottom:10px;
+      color:#1e293b;
+    }
+
+    p{
+      font-size:16px;
+      color:#475569;
+      margin-bottom:22px;
+    }
+
+    .install-btn{
+      display:inline-block;
+      background:#3248f5;
+      color:#fff;
+      padding:14px 22px;
+      font-size:18px;
+      font-weight:800;
+      border-radius:14px;
+      text-decoration:none;
+      box-shadow:0 18px 30px rgba(50,72,245,.35);
+      transition:.25s;
+    }
+
+    .install-btn:hover{
+      transform:translateY(-3px) scale(1.03);
+    }
+
+    .note{
+      margin-top:18px;
+      font-size:13px;
+      color:#64748b;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="page">
+<div class="container">
+  <h1>Desisaver App</h1>
 
-  <!-- BRAND -->
-  <div class="top">
-    <img src="/assets/logo.png" class="logo" alt="Desisaver Logo">
-    <div class="brand">Desisaver</div>
+  <p>
+    Desisaver is an all-in-one video downloader app for  
+    Terabox, Instagram, YouTube, Facebook, TikTok and more.
+  </p>
+
+  <a href="#" id="installBtn" class="install-btn">
+    📲 Install Desisaver App
+  </a>
+
+  <div class="note">
+    Works best on Google Chrome (Android).
   </div>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-card">
-      <h1>Install Desisaver App</h1>
-      <p class="subtitle">
-        Desisaver is an official Progressive Web App to download videos from  
-        Terabox, Instagram, YouTube, Facebook, TikTok and more — fast & secure.
-      </p>
-
-      <a href="#" id="installBtn" class="install-btn">
-        📲 Install Desisaver App
-      </a>
-
-      <div class="note">
-        Best on Chrome (Android).  
-        iPhone: Safari → Share → Add to Home Screen
-      </div>
-    </div>
-
-    <!-- SCREENSHOTS -->
-    <div class="screens">
-      <img src="/assets/screen1.png" alt="Desisaver App Screen 1">
-      <img src="/assets/screen2.png" alt="Desisaver App Screen 2">
-      <img src="/assets/screen3.png" alt="Desisaver App Screen 3">
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="features">
-    <div class="feature">
-      <h3>⚡ Lightning Fast</h3>
-      <p>Instant loading and smooth app-like performance.</p>
-    </div>
-    <div class="feature">
-      <h3>📥 All Video Download</h3>
-      <p>Terabox, Instagram, YouTube, Facebook, TikTok & more.</p>
-    </div>
-    <div class="feature">
-      <h3>🔒 Secure PWA</h3>
-      <p>No APK, no Play Store, no risk.</p>
-    </div>
-    <div class="feature">
-      <h3>📱 Install Once</h3>
-      <p>Use like a native app, anytime.</p>
-    </div>
-  </section>
-
 </div>
 
 <script>
   let deferredPrompt = null;
   const installBtn = document.getElementById("installBtn");
 
-  // Service worker
+  // Register service worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
-  }
-
-  // 🚀 Redirect installed users to home
-  if (
-    window.matchMedia("(display-mode: standalone)").matches ||
-    window.navigator.standalone === true
-  ) {
-    window.location.replace("/");
   }
 
   // Capture install event
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
+    installBtn.style.display = "inline-block";
   });
 
-  // 📊 Install button tracking + install
+  // Install button click
   installBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
-    gtag('event', 'install_click', {
-      event_category: 'PWA',
-      event_label: 'Desisaver Install Button'
-    });
-
     if (!deferredPrompt) {
-      alert("Menu (⋮) → Add to Home Screen");
+      alert(
+        "Install option not available.\n\n" +
+        "Chrome menu (⋮) → Add to Home Screen"
+      );
       return;
     }
 
