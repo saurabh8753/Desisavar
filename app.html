@@ -4,18 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- ✅ SEO -->
+  <!-- SEO -->
   <title>Desisaver App – All Video Downloader | Install PWA</title>
   <meta name="description" content="Desisaver App – All-in-one video downloader for Terabox, Instagram, YouTube, Facebook, TikTok and more. Install Desisaver PWA app now." />
   <meta name="keywords" content="desisaver, desisaver app, video downloader app, terabox downloader, instagram video downloader, pwa app" />
   <meta name="robots" content="index, follow" />
 
-  <!-- ✅ PWA -->
+  <!-- PWA -->
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#3248f5" />
-
-  <!-- ✅ Icons -->
-  <link rel="icon" href="/icon-192.png" />
 
   <style>
     body{
@@ -32,6 +29,16 @@
     .container{
       max-width:520px;
       padding:24px;
+    }
+
+    /* 🔥 Poster */
+    .poster{
+      width:100%;
+      max-width:420px;
+      margin:0 auto 22px;
+      border-radius:20px;
+      box-shadow:0 20px 40px rgba(0,0,0,.2);
+      display:block;
     }
 
     h1{
@@ -74,6 +81,14 @@
 <body>
 
 <div class="container">
+
+  <!-- 🔥 TOP POSTER (DUMMY IMAGE LINK) -->
+  <img
+    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkOBtJ_CeVQ48_sLVJWyC4m4VwL4loffbYqIRDMUaJRl8hryiP_1DiRA8TAx6buBWwUTrNsD6k3bmfLKsxjsqdV7PavMcPCi3AzBjKUlbjlCiS8tQcXQrytKLBNZVTlj8IP8wBWhdGyZiY_POfw00N4ZNYlnLRGTD6kFcuwq5awkEtDlMA_1h50QRjSqxN/s1600/icon-192.png"
+    alt="Desisaver App Poster"
+    class="poster"
+  >
+
   <h1>Desisaver App</h1>
 
   <p>
@@ -103,7 +118,6 @@
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    installBtn.style.display = "inline-block";
   });
 
   // Install button click
