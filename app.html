@@ -21,12 +21,10 @@
       background:linear-gradient(180deg,#eef2ff,#f9fafb);
       min-height:100vh;
       display:flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
       text-align:center;
-
-      /* ✅ space for sticky ad */
-      padding-bottom:90px;
     }
 
     .container{
@@ -78,25 +76,18 @@
       color:#64748b;
     }
 
-    /* ========================= */
-    /* 📌 STICKY BOTTOM AD STYLE */
-    /* ========================= */
-    #sticky-ad{
-      position:fixed;
-      bottom:0;
-      left:0;
+    /* Bottom Ad */
+    .bottom-ad{
       width:100%;
-      background:#fff;
-      padding:6px 0;
-      box-shadow:0 -4px 15px rgba(0,0,0,0.15);
-      z-index:9999;
+      max-width:520px;
+      margin:40px auto 20px;
       display:flex;
       justify-content:center;
-      align-items:center;
+      overflow:hidden;
     }
 
-    #sticky-ad iframe,
-    #sticky-ad ins{
+    .bottom-ad iframe,
+    .bottom-ad ins{
       max-width:100% !important;
     }
   </style>
@@ -115,7 +106,7 @@
   <h1>Desisaver App</h1>
 
   <p>
-    Desisaver is an all-in-one video downloader app for  
+    Desisaver all-in-one video downloader app for  
     Terabox, Instagram, YouTube, Facebook, TikTok and more.
   </p>
 
@@ -158,10 +149,8 @@
   });
 </script>
 
-<!-- ========================= -->
-<!-- 📌 STICKY BOTTOM AD CODE -->
-<!-- ========================= -->
-<div id="sticky-ad">
+<!-- ✅ AD AT BOTTOM OF BODY (NOT STICKY) -->
+<div class="bottom-ad">
   <script async="async" data-cfasync="false"
     src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js">
   </script>
