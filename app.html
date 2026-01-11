@@ -31,7 +31,6 @@
       padding:24px;
     }
 
-    /* 🔥 Poster */
     .poster{
       width:100%;
       max-width:420px;
@@ -82,7 +81,6 @@
 
 <div class="container">
 
-  <!-- 🔥 TOP POSTER (DUMMY IMAGE LINK) -->
   <img
     src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkOBtJ_CeVQ48_sLVJWyC4m4VwL4loffbYqIRDMUaJRl8hryiP_1DiRA8TAx6buBWwUTrNsD6k3bmfLKsxjsqdV7PavMcPCi3AzBjKUlbjlCiS8tQcXQrytKLBNZVTlj8IP8wBWhdGyZiY_POfw00N4ZNYlnLRGTD6kFcuwq5awkEtDlMA_1h50QRjSqxN/s1600/icon-192.png"
     alt="Desisaver App Poster"
@@ -109,18 +107,15 @@
   let deferredPrompt = null;
   const installBtn = document.getElementById("installBtn");
 
-  // Register service worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
 
-  // Capture install event
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
   });
 
-  // Install button click
   installBtn.addEventListener("click", async (e) => {
     e.preventDefault();
 
@@ -137,6 +132,12 @@
     deferredPrompt = null;
   });
 </script>
+
+<!-- ✅ AD CODE ADDED INSIDE BODY (NO OTHER CHANGE) -->
+<script async="async" data-cfasync="false"
+  src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js">
+</script>
+<div id="container-546f6bc9178f50dbe958ddc959944152"></div>
 
 </body>
 </html>
