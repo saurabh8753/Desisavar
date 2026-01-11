@@ -24,6 +24,9 @@
       align-items:center;
       justify-content:center;
       text-align:center;
+
+      /* ✅ space for sticky ad */
+      padding-bottom:90px;
     }
 
     .container{
@@ -73,6 +76,28 @@
       margin-top:18px;
       font-size:13px;
       color:#64748b;
+    }
+
+    /* ========================= */
+    /* 📌 STICKY BOTTOM AD STYLE */
+    /* ========================= */
+    #sticky-ad{
+      position:fixed;
+      bottom:0;
+      left:0;
+      width:100%;
+      background:#fff;
+      padding:6px 0;
+      box-shadow:0 -4px 15px rgba(0,0,0,0.15);
+      z-index:9999;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    #sticky-ad iframe,
+    #sticky-ad ins{
+      max-width:100% !important;
     }
   </style>
 </head>
@@ -133,11 +158,15 @@
   });
 </script>
 
-<!-- ✅ AD CODE ADDED INSIDE BODY (NO OTHER CHANGE) -->
-<script async="async" data-cfasync="false"
-  src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js">
-</script>
-<div id="container-546f6bc9178f50dbe958ddc959944152"></div>
+<!-- ========================= -->
+<!-- 📌 STICKY BOTTOM AD CODE -->
+<!-- ========================= -->
+<div id="sticky-ad">
+  <script async="async" data-cfasync="false"
+    src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js">
+  </script>
+  <div id="container-546f6bc9178f50dbe958ddc959944152"></div>
+</div>
 
 </body>
 </html>
