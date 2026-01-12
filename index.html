@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -65,6 +66,7 @@
   .btn:hover{transform:translateY(-2px) scale(1.01)}
   .btn i{font-size:18px}
 
+  .dailytools{background:#0ea5e9} /* NEW */
   .terabox{background:#5b6bff}
   .instagram{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
   .youtube{background:#ff0000}
@@ -76,7 +78,6 @@
   .whatsapp{background:#25D366}
   .telegram{background:#229ED9}
 
-  /* ⭐ (NEW) Install Badge styles */
   #promo-badge{
     position:fixed;
     right:14px;
@@ -89,7 +90,7 @@
     box-shadow:0 18px 28px rgba(0,0,0,.28);
     cursor:pointer;
     z-index:9999;
-    display:none; /* default hidden */
+    display:none;
     animation:badgeBounce 2s infinite;
   }
   #promo-badge:hover{
@@ -109,6 +110,12 @@
 
 <div class="wrapper">
   <div class="card">
+
+    <!-- ✅ NEW BUTTON (Added above Terabox) -->
+    <a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank">
+      <i class="fa-solid fa-toolbox"></i>
+      Daily Use Tools
+    </a>
 
     <a class="btn terabox" href="https://buttons-dlq.pages.dev/terabox/" target="_blank">
       <i class="fa-solid fa-cloud-arrow-down"></i>
@@ -163,13 +170,11 @@
   </div>
 </div>
 
-<!-- ⭐ (NEW) Install badge -->
 <div id="promo-badge">
   📲 Install Desisaver App
 </div>
 
 <script>
-  // Service worker
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
@@ -179,7 +184,6 @@
 
   const today = new Date().toDateString();
   const lastUnlock = localStorage.getItem("desisavar_unlock_date");
-
   let adShown = lastUnlock === today;
 
   function isOffline() {
@@ -192,25 +196,18 @@
 
     adShown = true;
     localStorage.setItem("desisavar_unlock_date", today);
-
-    // 👇 सिर्फ एक बार ad
     window.open(AD_LINK, "_blank");
   }
 
-  // 👉 page पर किसी भी click पर — सिर्फ पहली बार Ad
   document.addEventListener(
     "click",
-    () => {
-      showAdOnce();
-    },
+    () => { showAdOnce(); },
     { capture: true }
   );
 
-  /* ⭐ (NEW) Install badge logic */
   const badge = document.getElementById("promo-badge");
   let deferredPrompt = null;
 
-  // hide if already installed
   const isStandalone =
     window.matchMedia("(display-mode: standalone)").matches ||
     window.navigator.standalone === true;
@@ -219,31 +216,26 @@
     badge.style.display = "none";
   }
 
-  // when install available
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
     badge.style.display = "flex";
   });
 
-  // badge click → install popup
   badge.addEventListener("click", async () => {
     if (!deferredPrompt) {
       alert("Install ke liye: Menu (⋮) → Add to Home Screen");
       return;
     }
-
     deferredPrompt.prompt();
     const result = await deferredPrompt.userChoice;
-
-    if (result.outcome === "accepted") {
-      badge.style.display = "none";
-    }
-
+    if (result.outcome === "accepted") badge.style.display = "none";
     deferredPrompt = null;
   });
 </script>
+
 <script async="async" data-cfasync="false" src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js"></script>
 <div id="container-546f6bc9178f50dbe958ddc959944152"></div>
+
 </body>
 </html>
