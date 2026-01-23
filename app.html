@@ -51,13 +51,6 @@
     }
     .install-btn:hover{transform:translateY(-3px) scale(1.03)}
     .note{margin-top:18px;font-size:13px;color:#64748b}
-    .bottom-ad{
-      width:100%;
-      max-width:520px;
-      margin:40px auto 20px;
-      display:flex;
-      justify-content:center;
-    }
   </style>
 </head>
 
@@ -85,14 +78,12 @@
   <div class="note">
     Works best on Google Chrome (Android)
   </div>
+
 </div>
 
 <script>
   let deferredPrompt = null;
   const installBtn = document.getElementById("installBtn");
-
-  const SMART_AD_LINK =
-    "https://www.effectivegatecpm.com/hamfxc0cre?key=98b8b86d55734c2055e254a6a0e2c5d8";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
@@ -103,46 +94,36 @@
     deferredPrompt = e;
   });
 
-  async function installAndAdFlow() {
-
-    // 👉 Install popup (available ho to)
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      try {
-        // ACCEPT ya CANCEL – dono handle
-        await deferredPrompt.userChoice;
-      } catch (e) {}
-      deferredPrompt = null;
+  async function handleInstall() {
+    if (!deferredPrompt) {
+      alert(
+        "Install option not available.\n\n" +
+        "Chrome menu (⋮) → Add to Home Screen"
+      );
+      return;
     }
 
-    // ⏳ INSTALL / CANCEL – dono case me
-    // 👉 EXACT 3 second baad Smart Ad
-    setTimeout(() => {
-      window.location.href = SMART_AD_LINK;
-    }, 3000);
+    deferredPrompt.prompt();
+    try {
+      await deferredPrompt.userChoice;
+    } catch (e) {}
+
+    deferredPrompt = null;
   }
 
   // Manual click
   installBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    installAndAdFlow();
+    handleInstall();
   });
 
-  // ⚡ Auto click (page load ke 1 sec baad)
+  // ⚡ AUTO CLICK (page load ke 1 sec baad)
   window.addEventListener("load", () => {
     setTimeout(() => {
       installBtn.click();
     }, 1000);
   });
 </script>
-
-<!-- 🔻 Bottom Ad -->
-<div class="bottom-ad">
-  <script async data-cfasync="false"
-    src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js">
-  </script>
-  <div id="container-546f6bc9178f50dbe958ddc959944152"></div>
-</div>
 
 </body>
 </html>
