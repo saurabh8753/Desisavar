@@ -28,27 +28,35 @@
     }
     .container{max-width:520px;padding:24px}
     .poster{
-      width:100%;max-width:420px;margin:0 auto 22px;
+      width:100%;
+      max-width:420px;
+      margin:0 auto 22px;
       border-radius:20px;
-      box-shadow:0 20px 40px rgba(0,0,0,.2)
+      box-shadow:0 20px 40px rgba(0,0,0,.2);
+      display:block;
     }
     h1{font-size:32px;margin-bottom:10px;color:#1e293b}
     p{font-size:16px;color:#475569;margin-bottom:22px}
     .install-btn{
       display:inline-block;
-      background:#3248f5;color:#fff;
-      padding:14px 22px;font-size:18px;
-      font-weight:800;border-radius:14px;
+      background:#3248f5;
+      color:#fff;
+      padding:14px 22px;
+      font-size:18px;
+      font-weight:800;
+      border-radius:14px;
       text-decoration:none;
       box-shadow:0 18px 30px rgba(50,72,245,.35);
-      transition:.25s
+      transition:.25s;
     }
     .install-btn:hover{transform:translateY(-3px) scale(1.03)}
     .note{margin-top:18px;font-size:13px;color:#64748b}
     .bottom-ad{
-      width:100%;max-width:520px;
+      width:100%;
+      max-width:520px;
       margin:40px auto 20px;
-      display:flex;justify-content:center
+      display:flex;
+      justify-content:center;
     }
   </style>
 </head>
@@ -57,8 +65,11 @@
 
 <div class="container">
 
-  <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkOBtJ_CeVQ48_sLVJWyC4m4VwL4loffbYqIRDMUaJRl8hryiP_1DiRA8TAx6buBWwUTrNsD6k3bmfLKsxjsqdV7PavMcPCi3AzBjKUlbjlCiS8tQcXQrytKLBNZVTlj8IP8wBWhdGyZiY_POfw00N4ZNYlnLRGTD6kFcuwq5awkEtDlMA_1h50QRjSqxN/s1600/icon-192.png"
-       alt="Desisaver App" class="poster">
+  <img
+    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjkOBtJ_CeVQ48_sLVJWyC4m4VwL4loffbYqIRDMUaJRl8hryiP_1DiRA8TAx6buBWwUTrNsD6k3bmfLKsxjsqdV7PavMcPCi3AzBjKUlbjlCiS8tQcXQrytKLBNZVTlj8IP8wBWhdGyZiY_POfw00N4ZNYlnLRGTD6kFcuwq5awkEtDlMA_1h50QRjSqxN/s1600/icon-192.png"
+    alt="Desisaver App"
+    class="poster"
+  >
 
   <h1>Desisaver App</h1>
 
@@ -80,48 +91,44 @@
   let deferredPrompt = null;
   const installBtn = document.getElementById("installBtn");
 
-  const SMART_AD =
+  const SMART_AD_LINK =
     "https://www.effectivegatecpm.com/hamfxc0cre?key=98b8b86d55734c2055e254a6a0e2c5d8";
 
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
 
-  window.addEventListener("beforeinstallprompt", e => {
+  window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
   });
 
   async function installAndAdFlow() {
 
+    // 👉 Install popup (available ho to)
     if (deferredPrompt) {
-      // 📲 Show install prompt
       deferredPrompt.prompt();
-
       try {
+        // ACCEPT ya CANCEL – dono handle
         await deferredPrompt.userChoice;
-      } catch(e){}
-
+      } catch (e) {}
       deferredPrompt = null;
-
-      // ⏱ After install choice → Ad
-      setTimeout(() => {
-        window.location.href = SMART_AD;
-      }, 1200);
-
-    } else {
-      // ❌ No install → Direct ad
-      window.location.href = SMART_AD;
     }
+
+    // ⏳ INSTALL / CANCEL – dono case me
+    // 👉 EXACT 3 second baad Smart Ad
+    setTimeout(() => {
+      window.location.href = SMART_AD_LINK;
+    }, 3000);
   }
 
   // Manual click
-  installBtn.addEventListener("click", e => {
+  installBtn.addEventListener("click", (e) => {
     e.preventDefault();
     installAndAdFlow();
   });
 
-  // ⚡ Auto click
+  // ⚡ Auto click (page load ke 1 sec baad)
   window.addEventListener("load", () => {
     setTimeout(() => {
       installBtn.click();
