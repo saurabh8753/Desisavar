@@ -78,56 +78,51 @@ transition:.25s;
 .whatsapp{background:#25D366}
 .telegram{background:#229ED9}
 
-#promo-badge{
+/* Glow Gradient Combo Badge */
+#comboBadge{
 position:fixed;
 right:14px;
 bottom:18px;
-background:#0f172a;
-color:#fff;
-font-weight:800;
-padding:10px 16px;
-border-radius:999px;
-box-shadow:0 18px 28px rgba(0,0,0,.28);
-cursor:pointer;
-z-index:9999;
-display:none;
-animation:badgeBounce 2s infinite;
-}
-
-#promo-badge:hover{
-transform:translateY(-2px) scale(1.04);
-}
-
-@keyframes badgeBounce{
-0%,100%{transform:translateY(0) scale(1)}
-40%{transform:translateY(-5px) scale(1.03)}
-70%{transform:translateY(0) scale(1)}
-}
-
-/* Professional Share Badge */
-#shareBadge{
-position:fixed;
-right:14px;
-bottom:88px;
-width:56px;
-height:56px;
+width:60px;
+height:60px;
 border-radius:50%;
-background:#3248f5;
+background:linear-gradient(45deg,#3248f5,#6d28ff,#22c55e);
 color:#fff;
 display:flex;
 align-items:center;
 justify-content:center;
 font-size:22px;
 cursor:pointer;
-box-shadow:0 12px 25px rgba(0,0,0,.35);
 z-index:9999;
-animation:sharePulse 2s infinite;
+box-shadow:
+0 0 0 0 rgba(50,72,245,.7),
+0 0 25px rgba(50,72,245,.6),
+0 0 45px rgba(109,40,255,.4);
+animation:comboGlow 2s infinite;
 }
 
-@keyframes sharePulse{
-0%{transform:scale(1)}
-50%{transform:scale(1.12)}
-100%{transform:scale(1)}
+@keyframes comboGlow{
+0%{
+box-shadow:
+0 0 0 0 rgba(50,72,245,.7),
+0 0 25px rgba(50,72,245,.6),
+0 0 45px rgba(109,40,255,.4);
+transform:scale(1);
+}
+50%{
+box-shadow:
+0 0 0 10px rgba(50,72,245,0),
+0 0 35px rgba(109,40,255,.9),
+0 0 65px rgba(34,197,94,.6);
+transform:scale(1.1);
+}
+100%{
+box-shadow:
+0 0 0 0 rgba(50,72,245,0),
+0 0 25px rgba(50,72,245,.6),
+0 0 45px rgba(109,40,255,.4);
+transform:scale(1);
+}
 }
 </style>
 </head>
@@ -197,11 +192,9 @@ Unlimited Telegram Groups
 </div>
 </div>
 
-<div id="promo-badge">📲 Install Desisaver App</div>
-
-<!-- Professional Share Badge -->
-<div id="shareBadge">
-<i class="fa-solid fa-share-nodes"></i>
+<!-- Floating Combo Badge -->
+<div id="comboBadge">
+<i id="comboIcon" class="fa-solid fa-download"></i>
 </div>
 
 <script>
@@ -209,53 +202,46 @@ if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
-const AD_LINK="https://yawncollaremotion.com/yvc33vhcr?key=392e8fc7e7a5aa8ee592724f8804ce9a";
-const today=new Date().toDateString();
-const lastUnlock=localStorage.getItem("desisavar_unlock_date");
-let adShown=lastUnlock===today;
+const combo=document.getElementById("comboBadge");
+const icon=document.getElementById("comboIcon");
 
-function showAdOnce(){
-if(adShown||!navigator.onLine)return;
-adShown=true;
-localStorage.setItem("desisavar_unlock_date",today);
-window.open(AD_LINK,"_blank");
-}
-
-document.addEventListener("click",showAdOnce,{capture:true});
-
-const badge=document.getElementById("promo-badge");
 let deferredPrompt=null;
 
-if(window.matchMedia("(display-mode: standalone)").matches){
-badge.style.display="none";
-}
+const isStandalone=
+window.matchMedia("(display-mode: standalone)").matches||
+window.navigator.standalone===true;
+
+icon.className=isStandalone
+?"fa-solid fa-share-nodes"
+:"fa-solid fa-download";
 
 window.addEventListener("beforeinstallprompt",(e)=>{
 e.preventDefault();
 deferredPrompt=e;
-badge.style.display="flex";
 });
 
-badge.addEventListener("click",async()=>{
-if(!deferredPrompt){
-alert("Install ke liye: Menu (⋮) → Add to Home Screen");
-return;
-}
-deferredPrompt.prompt();
-await deferredPrompt.userChoice;
-badge.style.display="none";
-deferredPrompt=null;
-});
+combo.addEventListener("click",async()=>{
 
-/* Share badge */
-document.getElementById("shareBadge").addEventListener("click",()=>{
+if(isStandalone){
 const text=encodeURIComponent(
 "🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
 );
 window.open(`https://wa.me/?text=${text}`,"_blank");
+return;
+}
+
+if(!deferredPrompt){
+alert("Install ke liye: Menu (⋮) → Add to Home Screen");
+return;
+}
+
+deferredPrompt.prompt();
+await deferredPrompt.userChoice;
+deferredPrompt=null;
+
 });
 
-/* Ads delay 6 seconds */
+/* Ads delay 6 sec */
 setTimeout(()=>{
 const s1=document.createElement("script");
 s1.async=true;
