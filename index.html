@@ -34,17 +34,6 @@ letter-spacing:.3px;
 box-shadow:0 5px 20px rgba(0,0,0,.12);
 }
 
-#shareBtn{
-margin:12px;
-padding:10px 16px;
-border:none;
-border-radius:10px;
-background:#22c55e;
-color:#fff;
-font-weight:800;
-cursor:pointer;
-}
-
 .wrapper{
 width:100%;
 max-width:520px;
@@ -104,13 +93,41 @@ z-index:9999;
 display:none;
 animation:badgeBounce 2s infinite;
 }
+
 #promo-badge:hover{
 transform:translateY(-2px) scale(1.04);
 }
+
 @keyframes badgeBounce{
 0%,100%{transform:translateY(0) scale(1)}
 40%{transform:translateY(-5px) scale(1.03)}
 70%{transform:translateY(0) scale(1)}
+}
+
+/* WhatsApp Share Badge */
+#waShareBadge{
+position:fixed;
+left:14px;
+bottom:18px;
+width:56px;
+height:56px;
+border-radius:50%;
+background:#25D366;
+color:#fff;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:26px;
+cursor:pointer;
+box-shadow:0 12px 25px rgba(0,0,0,.3);
+z-index:9999;
+animation:waPulse 2s infinite;
+}
+
+@keyframes waPulse{
+0%{transform:scale(1)}
+50%{transform:scale(1.12)}
+100%{transform:scale(1)}
 }
 </style>
 </head>
@@ -118,8 +135,6 @@ transform:translateY(-2px) scale(1.04);
 <body>
 
 <header>Desisavar</header>
-
-<button id="shareBtn">📤 Share App</button>
 
 <div class="wrapper">
 <div class="card">
@@ -184,6 +199,11 @@ Unlimited Telegram Groups
 
 <div id="promo-badge">📲 Install Desisaver App</div>
 
+<!-- WhatsApp Share Badge -->
+<div id="waShareBadge">
+<i class="fa-brands fa-whatsapp"></i>
+</div>
+
 <script>
 if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
@@ -227,22 +247,13 @@ badge.style.display="none";
 deferredPrompt=null;
 });
 
-// Share feature
-document.getElementById("shareBtn").addEventListener("click", async () => {
-if(navigator.share){
-try{
-await navigator.share({
-title:"Desisaver App",
-text:"Download Desisaver App – All Video Downloader 🚀",
-url:window.location.href
-});
-}catch(e){}
-}else{
-alert("Sharing not supported on this device");
-}
+/* WhatsApp share */
+document.getElementById("waShareBadge").addEventListener("click",()=>{
+const text=encodeURIComponent("Download Desisaver App 🚀\n\n👉 https://shorturl.at/qfsIm");
+window.open(`https://wa.me/?text=${text}`,"_blank");
 });
 
-// Ads delay 6 sec
+/* Ads delay 6 seconds */
 setTimeout(()=>{
 const s1=document.createElement("script");
 s1.async=true;
