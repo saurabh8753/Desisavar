@@ -34,6 +34,17 @@ letter-spacing:.3px;
 box-shadow:0 5px 20px rgba(0,0,0,.12);
 }
 
+#shareBtn{
+margin:12px;
+padding:10px 16px;
+border:none;
+border-radius:10px;
+background:#22c55e;
+color:#fff;
+font-weight:800;
+cursor:pointer;
+}
+
 .wrapper{
 width:100%;
 max-width:520px;
@@ -107,6 +118,8 @@ transform:translateY(-2px) scale(1.04);
 <body>
 
 <header>Desisavar</header>
+
+<button id="shareBtn">📤 Share App</button>
 
 <div class="wrapper">
 <div class="card">
@@ -214,7 +227,22 @@ badge.style.display="none";
 deferredPrompt=null;
 });
 
-// 🔥 Ads load after 6 seconds
+// Share feature
+document.getElementById("shareBtn").addEventListener("click", async () => {
+if(navigator.share){
+try{
+await navigator.share({
+title:"Desisaver App",
+text:"Download Desisaver App – All Video Downloader 🚀",
+url:window.location.href
+});
+}catch(e){}
+}else{
+alert("Sharing not supported on this device");
+}
+});
+
+// Ads delay 6 sec
 setTimeout(()=>{
 const s1=document.createElement("script");
 s1.async=true;
