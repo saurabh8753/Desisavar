@@ -104,27 +104,27 @@ transform:translateY(-2px) scale(1.04);
 70%{transform:translateY(0) scale(1)}
 }
 
-/* WhatsApp Share Badge */
-#waShareBadge{
+/* Professional Share Badge */
+#shareBadge{
 position:fixed;
-left:14px;
-bottom:18px;
+right:14px;
+bottom:88px;
 width:56px;
 height:56px;
 border-radius:50%;
-background:#25D366;
+background:#3248f5;
 color:#fff;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:26px;
+font-size:22px;
 cursor:pointer;
-box-shadow:0 12px 25px rgba(0,0,0,.3);
+box-shadow:0 12px 25px rgba(0,0,0,.35);
 z-index:9999;
-animation:waPulse 2s infinite;
+animation:sharePulse 2s infinite;
 }
 
-@keyframes waPulse{
+@keyframes sharePulse{
 0%{transform:scale(1)}
 50%{transform:scale(1.12)}
 100%{transform:scale(1)}
@@ -199,9 +199,9 @@ Unlimited Telegram Groups
 
 <div id="promo-badge">📲 Install Desisaver App</div>
 
-<!-- WhatsApp Share Badge -->
-<div id="waShareBadge">
-<i class="fa-brands fa-whatsapp"></i>
+<!-- Professional Share Badge -->
+<div id="shareBadge">
+<i class="fa-solid fa-share-nodes"></i>
 </div>
 
 <script>
@@ -247,9 +247,11 @@ badge.style.display="none";
 deferredPrompt=null;
 });
 
-/* WhatsApp share */
-document.getElementById("waShareBadge").addEventListener("click",()=>{
-const text=encodeURIComponent("Download Desisaver App 🚀\n\n👉 https://shorturl.at/qfsIm");
+/* Share badge */
+document.getElementById("shareBadge").addEventListener("click",()=>{
+const text=encodeURIComponent(
+"🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
+);
 window.open(`https://wa.me/?text=${text}`,"_blank");
 });
 
