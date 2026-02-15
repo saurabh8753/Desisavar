@@ -37,7 +37,7 @@ box-shadow:0 5px 20px rgba(0,0,0,.12);
 .wrapper{
 width:100%;
 max-width:520px;
-padding:20px 14px 80px;
+padding:20px 14px 120px;
 }
 
 .card{
@@ -75,10 +75,9 @@ transition:.25s;
 .tiktok{background:#111}
 .snapchat{background:#fffc00;color:#000}
 .pinterest{background:#e60023}
-.whatsapp{background:#25D366}
 .telegram{background:#229ED9}
 
-/* Glow Gradient Combo Badge */
+/* Floating Combo Badge */
 #comboBadge{
 position:fixed;
 right:14px;
@@ -94,35 +93,24 @@ justify-content:center;
 font-size:22px;
 cursor:pointer;
 z-index:9999;
-box-shadow:
-0 0 0 0 rgba(50,72,245,.7),
-0 0 25px rgba(50,72,245,.6),
-0 0 45px rgba(109,40,255,.4);
+box-shadow:0 0 25px rgba(50,72,245,.6);
 animation:comboGlow 2s infinite;
 }
 
 @keyframes comboGlow{
-0%{
-box-shadow:
-0 0 0 0 rgba(50,72,245,.7),
-0 0 25px rgba(50,72,245,.6),
-0 0 45px rgba(109,40,255,.4);
-transform:scale(1);
+0%{transform:scale(1)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
 }
-50%{
-box-shadow:
-0 0 0 10px rgba(50,72,245,0),
-0 0 35px rgba(109,40,255,.9),
-0 0 65px rgba(34,197,94,.6);
-transform:scale(1.1);
-}
-100%{
-box-shadow:
-0 0 0 0 rgba(50,72,245,0),
-0 0 25px rgba(50,72,245,.6),
-0 0 45px rgba(109,40,255,.4);
-transform:scale(1);
-}
+
+/* Ad container under badge */
+#adContainer{
+position:fixed;
+right:14px;
+bottom:90px;
+width:300px;
+max-width:90vw;
+z-index:9998;
 }
 </style>
 </head>
@@ -177,11 +165,6 @@ Snapchat Video Downloader
 <a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
 <i class="fa-brands fa-pinterest"></i>
 Pinterest Video Downloader
-</a>
-
-<a class="btn whatsapp" href="https://groupda.com" target="_blank">
-<i class="fa-brands fa-whatsapp"></i>
-Unlimited Whatsapp Groups
 </a>
 
 <a class="btn telegram" href="https://groupda.com/telegram" target="_blank">
@@ -243,14 +226,19 @@ deferredPrompt=null;
 
 /* Ads delay 6 sec */
 setTimeout(()=>{
-const s1=document.createElement("script");
-s1.async=true;
-s1.src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
-document.body.appendChild(s1);
+
+const adWrap=document.createElement("div");
+adWrap.id="adContainer";
+document.body.appendChild(adWrap);
 
 const div1=document.createElement("div");
 div1.id="container-546f6bc9178f50dbe958ddc959944152";
-document.body.appendChild(div1);
+adWrap.appendChild(div1);
+
+const s1=document.createElement("script");
+s1.async=true;
+s1.src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
+adWrap.appendChild(s1);
 
 window.atOptions={
 key:'36ffe368e4b924f77be468053af7bb35',
@@ -262,7 +250,8 @@ params:{}
 
 const s2=document.createElement("script");
 s2.src="https://www.highperformanceformat.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
-document.body.appendChild(s2);
+adWrap.appendChild(s2);
+
 },6000);
 </script>
 
