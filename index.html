@@ -37,7 +37,7 @@ box-shadow:0 5px 20px rgba(0,0,0,.12);
 .wrapper{
 width:100%;
 max-width:520px;
-padding:20px 14px 120px;
+padding:20px 14px 80px;
 }
 
 .card{
@@ -77,40 +77,11 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Floating Combo Badge */
-#comboBadge{
-position:fixed;
-right:14px;
-bottom:18px;
-width:60px;
-height:60px;
-border-radius:50%;
-background:linear-gradient(45deg,#3248f5,#6d28ff,#22c55e);
-color:#fff;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-cursor:pointer;
-z-index:9999;
-box-shadow:0 0 25px rgba(50,72,245,.6);
-animation:comboGlow 2s infinite;
-}
-
-@keyframes comboGlow{
-0%{transform:scale(1)}
-50%{transform:scale(1.1)}
-100%{transform:scale(1)}
-}
-
-/* Ad container under badge */
+/* Ad inside card */
 #adContainer{
-position:fixed;
-right:14px;
-bottom:90px;
-width:300px;
-max-width:90vw;
-z-index:9998;
+margin-top:10px;
+display:flex;
+justify-content:center;
 }
 </style>
 </head>
@@ -120,7 +91,7 @@ z-index:9998;
 <header>Desisavar</header>
 
 <div class="wrapper">
-<div class="card">
+<div class="card" id="card">
 
 <a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank">
 <i class="fa-solid fa-toolbox"></i>
@@ -172,12 +143,10 @@ Pinterest Video Downloader
 Unlimited Telegram Groups
 </a>
 
-</div>
-</div>
+<!-- Ads will load here -->
+<div id="adContainer"></div>
 
-<!-- Floating Combo Badge -->
-<div id="comboBadge">
-<i id="comboIcon" class="fa-solid fa-download"></i>
+</div>
 </div>
 
 <script>
@@ -185,51 +154,10 @@ if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
-const combo=document.getElementById("comboBadge");
-const icon=document.getElementById("comboIcon");
-
-let deferredPrompt=null;
-
-const isStandalone=
-window.matchMedia("(display-mode: standalone)").matches||
-window.navigator.standalone===true;
-
-icon.className=isStandalone
-?"fa-solid fa-share-nodes"
-:"fa-solid fa-download";
-
-window.addEventListener("beforeinstallprompt",(e)=>{
-e.preventDefault();
-deferredPrompt=e;
-});
-
-combo.addEventListener("click",async()=>{
-
-if(isStandalone){
-const text=encodeURIComponent(
-"🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
-);
-window.open(`https://wa.me/?text=${text}`,"_blank");
-return;
-}
-
-if(!deferredPrompt){
-alert("Install ke liye: Menu (⋮) → Add to Home Screen");
-return;
-}
-
-deferredPrompt.prompt();
-await deferredPrompt.userChoice;
-deferredPrompt=null;
-
-});
-
 /* Ads delay 6 sec */
 setTimeout(()=>{
 
-const adWrap=document.createElement("div");
-adWrap.id="adContainer";
-document.body.appendChild(adWrap);
+const adWrap=document.getElementById("adContainer");
 
 const div1=document.createElement("div");
 div1.id="container-546f6bc9178f50dbe958ddc959944152";
