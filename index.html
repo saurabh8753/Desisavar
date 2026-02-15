@@ -75,13 +75,54 @@ transition:.25s;
 .tiktok{background:#111}
 .snapchat{background:#fffc00;color:#000}
 .pinterest{background:#e60023}
+.whatsapp{background:#25D366}
 .telegram{background:#229ED9}
 
-/* Ad inside card */
-#adContainer{
-margin-top:10px;
+/* Glow Gradient Combo Badge */
+#comboBadge{
+position:fixed;
+right:14px;
+bottom:18px;
+width:60px;
+height:60px;
+border-radius:50%;
+background:linear-gradient(45deg,#3248f5,#6d28ff,#22c55e);
+color:#fff;
 display:flex;
+align-items:center;
 justify-content:center;
+font-size:22px;
+cursor:pointer;
+z-index:9999;
+box-shadow:
+0 0 0 0 rgba(50,72,245,.7),
+0 0 25px rgba(50,72,245,.6),
+0 0 45px rgba(109,40,255,.4);
+animation:comboGlow 2s infinite;
+}
+
+@keyframes comboGlow{
+0%{
+box-shadow:
+0 0 0 0 rgba(50,72,245,.7),
+0 0 25px rgba(50,72,245,.6),
+0 0 45px rgba(109,40,255,.4);
+transform:scale(1);
+}
+50%{
+box-shadow:
+0 0 0 10px rgba(50,72,245,0),
+0 0 35px rgba(109,40,255,.9),
+0 0 65px rgba(34,197,94,.6);
+transform:scale(1.1);
+}
+100%{
+box-shadow:
+0 0 0 0 rgba(50,72,245,0),
+0 0 25px rgba(50,72,245,.6),
+0 0 45px rgba(109,40,255,.4);
+transform:scale(1);
+}
 }
 </style>
 </head>
@@ -91,7 +132,7 @@ justify-content:center;
 <header>Desisavar</header>
 
 <div class="wrapper">
-<div class="card" id="card">
+<div class="card">
 
 <a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank">
 <i class="fa-solid fa-toolbox"></i>
@@ -138,15 +179,22 @@ Snapchat Video Downloader
 Pinterest Video Downloader
 </a>
 
+<a class="btn whatsapp" href="https://groupda.com" target="_blank">
+<i class="fa-brands fa-whatsapp"></i>
+Unlimited Whatsapp Groups
+</a>
+
 <a class="btn telegram" href="https://groupda.com/telegram" target="_blank">
 <i class="fa-brands fa-telegram"></i>
 Unlimited Telegram Groups
 </a>
 
-<!-- Ads will load here -->
-<div id="adContainer"></div>
-
 </div>
+</div>
+
+<!-- Floating Combo Badge -->
+<div id="comboBadge">
+<i id="comboIcon" class="fa-solid fa-download"></i>
 </div>
 
 <script>
@@ -154,19 +202,55 @@ if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
+const combo=document.getElementById("comboBadge");
+const icon=document.getElementById("comboIcon");
+
+let deferredPrompt=null;
+
+const isStandalone=
+window.matchMedia("(display-mode: standalone)").matches||
+window.navigator.standalone===true;
+
+icon.className=isStandalone
+?"fa-solid fa-share-nodes"
+:"fa-solid fa-download";
+
+window.addEventListener("beforeinstallprompt",(e)=>{
+e.preventDefault();
+deferredPrompt=e;
+});
+
+combo.addEventListener("click",async()=>{
+
+if(isStandalone){
+const text=encodeURIComponent(
+"🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
+);
+window.open(`https://wa.me/?text=${text}`,"_blank");
+return;
+}
+
+if(!deferredPrompt){
+alert("Install ke liye: Menu (⋮) → Add to Home Screen");
+return;
+}
+
+deferredPrompt.prompt();
+await deferredPrompt.userChoice;
+deferredPrompt=null;
+
+});
+
 /* Ads delay 6 sec */
 setTimeout(()=>{
-
-const adWrap=document.getElementById("adContainer");
-
-const div1=document.createElement("div");
-div1.id="container-546f6bc9178f50dbe958ddc959944152";
-adWrap.appendChild(div1);
-
 const s1=document.createElement("script");
 s1.async=true;
 s1.src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
-adWrap.appendChild(s1);
+document.body.appendChild(s1);
+
+const div1=document.createElement("div");
+div1.id="container-546f6bc9178f50dbe958ddc959944152";
+document.body.appendChild(div1);
 
 window.atOptions={
 key:'36ffe368e4b924f77be468053af7bb35',
@@ -178,8 +262,7 @@ params:{}
 
 const s2=document.createElement("script");
 s2.src="https://www.highperformanceformat.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
-adWrap.appendChild(s2);
-
+document.body.appendChild(s2);
 },6000);
 </script>
 
