@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Desisaver Admin Panel</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+margin:0;
+font-family:Inter,Arial;
+background:#0f172a;
+color:#fff;
+padding:20px;
+}
+
+h1{
+margin-bottom:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,.4);
+}
+
+.value{
+font-size:28px;
+font-weight:900;
+margin-top:10px;
+}
+
+button{
+padding:8px 14px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:700;
+margin-right:10px;
+}
+
+.filter-btn{background:#3b82f6;color:#fff}
+.reset-btn{background:#ef4444;color:#fff}
+
+canvas{
+background:#1e293b;
+padding:20px;
+border-radius:14px;
+margin-top:20px;
+}
+</style>
+</head>
+
+<body>
+
+<script>
+const pass = prompt("Enter Admin Password");
+if(pass !== "desi123"){
+document.body.innerHTML = "Access Denied";
+throw new Error("Unauthorized");
+}
+</script>
+
+<h1>🚀 Desisaver Admin Dashboard</h1>
+
+<div>
+<button class="filter-btn" onclick="loadData('today')">Today</button>
+<button class="filter-btn" onclick="loadData('all')">All Time</button>
+<button class="reset-btn" onclick="resetData()">Reset Data</button>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div>Total Visitors</div>
+<div class="value" id="visitors">0</div>
+</div>
+
+<div class="card">
+<div>Install Clicks</div>
+<div class="value" id="installClicks">0</div>
+</div>
+
+<div class="card">
+<div>Successful Installs</div>
+<div class="value" id="installs">0</div>
+</div>
+
+<div class="card">
+<div>Share Clicks</div>
+<div class="value" id="shares">0</div>
+</div>
+
+<div class="card">
+<div>Conversion Rate</div>
+<div class="value" id="conversion">0%</div>
+</div>
+
+<div class="card">
+<div>Mobile Users</div>
+<div class="value" id="mobile">0</div>
+</div>
+
+<div class="card">
+<div>Desktop Users</div>
+<div class="value" id="desktop">0</div>
+</div>
+
+</div>
+
+<canvas id="lineChart"></canvas>
+<canvas id="donutChart"></canvas>
+
+<script>
+function getStats(type){
+
+const today = new Date().toDateString();
+
+const data = JSON.parse(localStorage.getItem("desi_stats") || "{}");
+
+if(type==="today"){
+return data[today] || defaultStats();
+}
+
+return data["all"] || defaultStats();
+}
+
+function defaultStats(){
+return {
+visitors:0,
+installClicks:0,
+installs:0,
+shares:0,
+mobile:0,
+desktop:0
+};
+}
+
+function loadData(type){
+
+const stats = getStats(type);
+
+document.getElementById("visitors").innerText = stats.visitors;
+document.getElementById("installClicks").innerText = stats.installClicks;
+document.getElementById("installs").innerText = stats.installs;
+document.getElementById("shares").innerText = stats.shares;
+document.getElementById("mobile").innerText = stats.mobile;
+document.getElementById("desktop").innerText = stats.desktop;
+
+const conversion = stats.visitors
+? ((stats.installs / stats.visitors) * 100).toFixed(1)+"%"
+: "0%";
+
+document.getElementById("conversion").innerText = conversion;
+
+updateCharts(stats);
+}
+
+function updateCharts(stats){
+
+lineChart.data.datasets[0].data = [
+stats.visitors,
+stats.installClicks,
+stats.installs,
+stats.shares
+];
+lineChart.update();
+
+donutChart.data.datasets[0].data = [
+stats.mobile,
+stats.desktop
+];
+donutChart.update();
+}
+
+function resetData(){
+localStorage.removeItem("desi_stats");
+alert("Data Reset Complete");
+loadData("all");
+}
+
+const lineChart = new Chart(document.getElementById("lineChart"),{
+type:"line",
+data:{
+labels:["Visitors","Install Clicks","Installs","Shares"],
+datasets:[{
+label:"Performance",
+data:[0,0,0,0],
+borderColor:"#3b82f6",
+backgroundColor:"rgba(59,130,246,.3)",
+fill:true,
+tension:0.4
+}]
+}
+});
+
+const donutChart = new Chart(document.getElementById("donutChart"),{
+type:"doughnut",
+data:{
+labels:["Mobile","Desktop"],
+datasets:[{
+data:[0,0],
+backgroundColor:["#22c55e","#f59e0b"]
+}]
+}
+});
+
+loadData("all");
+</script>
+
+</body>
+</html>
