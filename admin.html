@@ -1,39 +1,65 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Desisaver Analytics</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta http-equiv="Cache-Control" content="no-store" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
 
 <style>
 body{
   margin:0;
-  font-family:Arial;
-  background:#0f172a;
+  font-family:Arial, sans-serif;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
   color:#fff;
   display:flex;
   justify-content:center;
   align-items:center;
   min-height:100vh;
 }
+
 .container{
   width:100%;
-  max-width:500px;
+  max-width:550px;
+  padding:20px;
 }
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
 .card{
   background:#1e293b;
   padding:20px;
   border-radius:14px;
-  margin-bottom:15px;
+  margin-bottom:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.4);
 }
-h2{
-  margin:0 0 10px;
+
+.card h2{
+  margin:0 0 12px;
   color:#38bdf8;
 }
+
 .stat{
   display:flex;
   justify-content:space-between;
-  padding:8px 0;
+  padding:10px 12px;
+  background:#334155;
+  border-radius:8px;
+  margin-bottom:8px;
+  font-weight:600;
+}
+
+.footer{
+  text-align:center;
+  font-size:12px;
+  opacity:.6;
+  margin-top:10px;
 }
 </style>
 </head>
@@ -42,25 +68,31 @@ h2{
 
 <div class="container">
 
+<h1>📊 Desisaver Analytics</h1>
+
 <div class="card">
-<h2>Today</h2>
-<div class="stat">Visit <span id="tVisit">0</span></div>
-<div class="stat">Install <span id="tInstall">0</span></div>
-<div class="stat">Share <span id="tShare">0</span></div>
+  <h2>Today</h2>
+  <div class="stat">Visits <span id="tVisit">0</span></div>
+  <div class="stat">Installs <span id="tInstall">0</span></div>
+  <div class="stat">Shares <span id="tShare">0</span></div>
 </div>
 
 <div class="card">
-<h2>This Week</h2>
-<div class="stat">Visit <span id="wVisit">0</span></div>
-<div class="stat">Install <span id="wInstall">0</span></div>
-<div class="stat">Share <span id="wShare">0</span></div>
+  <h2>This Week</h2>
+  <div class="stat">Visits <span id="wVisit">0</span></div>
+  <div class="stat">Installs <span id="wInstall">0</span></div>
+  <div class="stat">Shares <span id="wShare">0</span></div>
 </div>
 
 <div class="card">
-<h2>All Time</h2>
-<div class="stat">Visit <span id="aVisit">0</span></div>
-<div class="stat">Install <span id="aInstall">0</span></div>
-<div class="stat">Share <span id="aShare">0</span></div>
+  <h2>All Time</h2>
+  <div class="stat">Visits <span id="aVisit">0</span></div>
+  <div class="stat">Installs <span id="aInstall">0</span></div>
+  <div class="stat">Shares <span id="aShare">0</span></div>
+</div>
+
+<div class="footer">
+Auto refresh every 5 seconds
 </div>
 
 </div>
@@ -68,38 +100,46 @@ h2{
 <script>
 const API = "https://admin.yaartunah.workers.dev/?action=stats";
 
-function loadStats(){
-  fetch(API,{
-    method:"GET",
-    mode:"cors",
-    cache:"no-store"
-  })
-  .then(res => res.json())
-  .then(data => {
+/* 🔥 Disable service worker for admin */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.getRegistrations()
+  .then(regs => regs.forEach(r => r.unregister()));
+}
+
+async function loadStats(){
+  try{
+    const response = await fetch(API, {
+      method: "GET",
+      mode: "cors",
+      cache: "no-store"
+    });
+
+    const data = await response.json();
+
+    console.log("Stats:", data);
 
     // TODAY
-    document.getElementById("tVisit").innerText = data.today.visit;
-    document.getElementById("tInstall").innerText = data.today.install;
-    document.getElementById("tShare").innerText = data.today.share;
+    document.getElementById("tVisit").textContent = data.today.visit;
+    document.getElementById("tInstall").textContent = data.today.install;
+    document.getElementById("tShare").textContent = data.today.share;
 
     // WEEK
-    document.getElementById("wVisit").innerText = data.week.visit;
-    document.getElementById("wInstall").innerText = data.week.install;
-    document.getElementById("wShare").innerText = data.week.share;
+    document.getElementById("wVisit").textContent = data.week.visit;
+    document.getElementById("wInstall").textContent = data.week.install;
+    document.getElementById("wShare").textContent = data.week.share;
 
     // ALL TIME
-    document.getElementById("aVisit").innerText = data.allTime.visit;
-    document.getElementById("aInstall").innerText = data.allTime.install;
-    document.getElementById("aShare").innerText = data.allTime.share;
+    document.getElementById("aVisit").textContent = data.allTime.visit;
+    document.getElementById("aInstall").textContent = data.allTime.install;
+    document.getElementById("aShare").textContent = data.allTime.share;
 
-  })
-  .catch(err=>{
-    console.log("Fetch Error:",err);
-  });
+  } catch (error) {
+    console.log("Fetch error:", error);
+  }
 }
 
 loadStats();
-setInterval(loadStats,5000);
+setInterval(loadStats, 5000);
 </script>
 
 </body>
