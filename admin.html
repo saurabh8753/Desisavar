@@ -1,82 +1,137 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Desisavar Today Analytics</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desisaver Analytics Dashboard</title>
+
 <style>
 body{
-margin:0;
-font-family:Arial;
-background:#0f172a;
-color:#fff;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:linear-gradient(135deg,#0f172a,#1e293b);
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
 }
-.panel{
-width:420px;
-background:#1e293b;
-padding:25px;
-border-radius:16px;
-box-shadow:0 0 40px rgba(0,0,0,.6);
+
+.container{
+  width:100%;
+  max-width:600px;
+  padding:20px;
 }
-h2{text-align:center;margin-bottom:15px}
-.date{
-text-align:center;
-margin-bottom:20px;
-color:#94a3b8;
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:26px;
 }
+
+.card{
+  background:#1e293b;
+  border-radius:16px;
+  padding:18px;
+  margin-bottom:18px;
+  box-shadow:0 15px 30px rgba(0,0,0,.3);
+}
+
+.card h2{
+  font-size:18px;
+  margin-bottom:10px;
+  color:#38bdf8;
+}
+
 .stat{
-background:#334155;
-padding:18px;
-border-radius:12px;
-margin-bottom:15px;
-font-size:18px;
-display:flex;
-justify-content:space-between;
+  display:flex;
+  justify-content:space-between;
+  padding:10px 12px;
+  background:#334155;
+  border-radius:10px;
+  margin-bottom:8px;
+}
+
+.stat span{
+  font-weight:700;
+}
+
+.loading{
+  text-align:center;
+  margin-top:15px;
+  font-size:14px;
+  opacity:.6;
 }
 </style>
 </head>
 
 <body>
 
-<div class="panel">
-<h2>📊 Today Analytics</h2>
-<div class="date" id="date"></div>
+<div class="container">
 
-<div class="stat">
-<span>Today's Visits</span>
-<span id="visit">Loading...</span>
+<h1>📊 Desisaver Analytics</h1>
+
+<!-- TODAY -->
+<div class="card">
+  <h2>Today</h2>
+  <div class="stat">Visits <span id="todayVisit">0</span></div>
+  <div class="stat">Installs <span id="todayInstall">0</span></div>
+  <div class="stat">Shares <span id="todayShare">0</span></div>
 </div>
 
-<div class="stat">
-<span>Today's Install Clicks</span>
-<span id="install">Loading...</span>
+<!-- WEEK -->
+<div class="card">
+  <h2>This Week</h2>
+  <div class="stat">Visits <span id="weekVisit">0</span></div>
+  <div class="stat">Installs <span id="weekInstall">0</span></div>
+  <div class="stat">Shares <span id="weekShare">0</span></div>
 </div>
 
-<div class="stat">
-<span>Today's Share Clicks</span>
-<span id="share">Loading...</span>
+<!-- ALL TIME -->
+<div class="card">
+  <h2>All Time</h2>
+  <div class="stat">Visits <span id="totalVisit">0</span></div>
+  <div class="stat">Installs <span id="totalInstall">0</span></div>
+  <div class="stat">Shares <span id="totalShare">0</span></div>
 </div>
+
+<div class="loading">Auto refreshing every 10 seconds...</div>
 
 </div>
 
 <script>
-const WORKER="https://admin.yaartunah.workers.dev/?action=stats";
 
-async function loadStats(){
-  const res=await fetch(WORKER);
-  const data=await res.json();
+const API = "https://admin.yaartunah.workers.dev/?action=stats";
 
-  document.getElementById("date").innerText = data.date;
-  document.getElementById("visit").innerText = data.visit;
-  document.getElementById("install").innerText = data.install;
-  document.getElementById("share").innerText = data.share;
+function loadStats(){
+  fetch(API)
+    .then(res => res.json())
+    .then(data => {
+
+      document.getElementById("todayVisit").innerText = data.today.visit;
+      document.getElementById("todayInstall").innerText = data.today.install;
+      document.getElementById("todayShare").innerText = data.today.share;
+
+      document.getElementById("weekVisit").innerText = data.week.visit;
+      document.getElementById("weekInstall").innerText = data.week.install;
+      document.getElementById("weekShare").innerText = data.week.share;
+
+      document.getElementById("totalVisit").innerText = data.allTime.visit;
+      document.getElementById("totalInstall").innerText = data.allTime.install;
+      document.getElementById("totalShare").innerText = data.allTime.share;
+
+    })
+    .catch(err=>{
+      console.log("Error:",err);
+    });
 }
 
+// Initial load
 loadStats();
-setInterval(loadStats,5000);
+
+// Auto refresh every 10 sec
+setInterval(loadStats,10000);
+
 </script>
 
 </body>
