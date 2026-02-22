@@ -7,21 +7,34 @@
 
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#3248f5">
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<!-- 🔥 OneSignal SDK -->
+<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
+<script>
+window.OneSignalDeferred = window.OneSignalDeferred || [];
+OneSignalDeferred.push(async function(OneSignal) {
+  await OneSignal.init({
+    appId: "e86af341-20e6-480f-8650-09a42abd5b51",
+    notifyButton: { enable: false },
+    welcomeNotification: {
+      title: "🔥 Welcome to Desisavar!",
+      message: "अब आप latest updates और tools alerts पाएंगे 🚀"
+    }
+  });
+});
+</script>
 
 <style>
 *{box-sizing:border-box}
-
 body{
 margin:0;
-font-family: Inter, Arial, sans-serif;
+font-family:Inter,Arial,sans-serif;
 background:linear-gradient(180deg,#e8ecff,#f8f9ff);
 display:flex;
 flex-direction:column;
 align-items:center;
 }
-
 header{
 width:100%;
 padding:18px 0;
@@ -30,16 +43,13 @@ color:#fff;
 text-align:center;
 font-size:22px;
 font-weight:800;
-letter-spacing:.3px;
 box-shadow:0 5px 20px rgba(0,0,0,.12);
 }
-
 .wrapper{
 width:100%;
 max-width:520px;
 padding:20px 14px 80px;
 }
-
 .card{
 background:#fff;
 border-radius:16px;
@@ -49,7 +59,6 @@ display:flex;
 flex-direction:column;
 gap:14px;
 }
-
 .btn{
 display:flex;
 align-items:center;
@@ -62,23 +71,19 @@ font-weight:700;
 font-size:15px;
 transition:.25s;
 }
-
 .btn:hover{transform:translateY(-2px) scale(1.01)}
-.btn i{font-size:18px}
-
 .dailytools{background:#0ea5e9}
 .terabox{background:#5b6bff}
 .instagram{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
 .youtube{background:#ff0000}
 .facebook{background:#1877f2}
-.twitter{background:#000000}
+.twitter{background:#000}
 .tiktok{background:#111}
 .snapchat{background:#fffc00;color:#000}
 .pinterest{background:#e60023}
-.whatsapp{background:#25D366}
 .telegram{background:#229ED9}
 
-/* Glow Gradient Combo Badge */
+/* Floating Install/Share Badge */
 #comboBadge{
 position:fixed;
 right:14px;
@@ -94,35 +99,78 @@ justify-content:center;
 font-size:22px;
 cursor:pointer;
 z-index:9999;
-box-shadow:
-0 0 0 0 rgba(50,72,245,.7),
-0 0 25px rgba(50,72,245,.6),
-0 0 45px rgba(109,40,255,.4);
+box-shadow:0 0 25px rgba(109,40,255,.6);
 animation:comboGlow 2s infinite;
 }
-
 @keyframes comboGlow{
-0%{
-box-shadow:
-0 0 0 0 rgba(50,72,245,.7),
-0 0 25px rgba(50,72,245,.6),
-0 0 45px rgba(109,40,255,.4);
-transform:scale(1);
+0%{transform:scale(1)}
+50%{transform:scale(1.1)}
+100%{transform:scale(1)}
 }
-50%{
-box-shadow:
-0 0 0 10px rgba(50,72,245,0),
-0 0 35px rgba(109,40,255,.9),
-0 0 65px rgba(34,197,94,.6);
-transform:scale(1.1);
+
+/* 🔥 Premium Push UI */
+#pushOverlay{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(6px);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:99999;
+opacity:0;
+pointer-events:none;
+transition:.4s ease;
 }
-100%{
-box-shadow:
-0 0 0 0 rgba(50,72,245,0),
-0 0 25px rgba(50,72,245,.6),
-0 0 45px rgba(109,40,255,.4);
-transform:scale(1);
+#pushOverlay.active{
+opacity:1;
+pointer-events:auto;
 }
+.pushCard{
+width:90%;
+max-width:360px;
+background:linear-gradient(180deg,#111,#1e1e1e);
+border-radius:18px;
+padding:22px;
+color:#fff;
+text-align:center;
+transform:translateY(40px);
+transition:.4s ease;
+box-shadow:0 25px 50px rgba(0,0,0,.5);
+}
+#pushOverlay.active .pushCard{
+transform:translateY(0);
+}
+.pushTitle{
+font-size:20px;
+font-weight:800;
+margin-bottom:10px;
+}
+.pushDesc{
+font-size:14px;
+opacity:.85;
+margin-bottom:18px;
+}
+.pushButtons{
+display:flex;
+gap:10px;
+}
+.pushBtn{
+flex:1;
+padding:10px;
+border-radius:10px;
+border:none;
+font-weight:700;
+cursor:pointer;
+font-size:14px;
+}
+.allowBtn{
+background:linear-gradient(45deg,#3248f5,#6d28ff);
+color:#fff;
+}
+.laterBtn{
+background:#2a2a2a;
+color:#aaa;
 }
 </style>
 </head>
@@ -187,9 +235,22 @@ Telegram Updates Channel
 </div>
 </div>
 
-<!-- Floating Combo Badge -->
 <div id="comboBadge">
 <i id="comboIcon" class="fa-solid fa-download"></i>
+</div>
+
+<!-- 🔔 Push Overlay -->
+<div id="pushOverlay">
+<div class="pushCard">
+<div class="pushTitle">🔔 Enable Notifications</div>
+<div class="pushDesc">
+Get instant updates, new tools & exclusive alerts directly on your device.
+</div>
+<div class="pushButtons">
+<button class="pushBtn laterBtn" id="laterBtn">Maybe Later</button>
+<button class="pushBtn allowBtn" id="allowBtn">Allow</button>
+</div>
+</div>
 </div>
 
 <script>
@@ -197,9 +258,9 @@ if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
+/* ===== INSTALL / SHARE BADGE ===== */
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
-
 let deferredPrompt=null;
 
 const isStandalone=
@@ -216,7 +277,6 @@ deferredPrompt=e;
 });
 
 combo.addEventListener("click",async()=>{
-
 if(isStandalone){
 const text=encodeURIComponent(
 "🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
@@ -224,41 +284,60 @@ const text=encodeURIComponent(
 window.open(`https://wa.me/?text=${text}`,"_blank");
 return;
 }
-
 if(!deferredPrompt){
 alert("Install ke liye: Menu (⋮) → Add to Home Screen");
 return;
 }
-
 deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 deferredPrompt=null;
-
 });
 
-/* Ads delay 6 sec */
+/* ===== SMART AUTO RE-PROMPT ===== */
+const overlay=document.getElementById("pushOverlay");
+const allowBtn=document.getElementById("allowBtn");
+const laterBtn=document.getElementById("laterBtn");
+
+const REPROMPT_HOURS = 24;
+
+function shouldShowPrompt(){
+if(Notification.permission!=="default") return false;
+const lastPrompt=localStorage.getItem("push_last_prompt");
+if(!lastPrompt) return true;
+if(lastPrompt==="subscribed") return false;
+const diff=Date.now()-parseInt(lastPrompt);
+const hoursPassed=diff/(1000*60*60);
+return hoursPassed>=REPROMPT_HOURS;
+}
+
+function waitForOneSignal(callback){
+if(window.OneSignal){callback();}
+else{setTimeout(()=>waitForOneSignal(callback),300);}
+}
+
+if(shouldShowPrompt()){
 setTimeout(()=>{
-const s1=document.createElement("script");
-s1.async=true;
-s1.src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
-document.body.appendChild(s1);
-
-const div1=document.createElement("div");
-div1.id="container-546f6bc9178f50dbe958ddc959944152";
-document.body.appendChild(div1);
-
-window.atOptions={
-key:'36ffe368e4b924f77be468053af7bb35',
-format:'iframe',
-height:250,
-width:300,
-params:{}
-};
-
-const s2=document.createElement("script");
-s2.src="https://www.highperformanceformat.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
-document.body.appendChild(s2);
+overlay.classList.add("active");
+localStorage.setItem("push_last_prompt",Date.now());
 },6000);
+}
+
+allowBtn.addEventListener("click",()=>{
+overlay.classList.remove("active");
+setTimeout(()=>{
+waitForOneSignal(()=>{
+OneSignalDeferred.push(async function(OneSignal){
+await OneSignal.Notifications.requestPermission();
+});
+});
+},400);
+localStorage.setItem("push_last_prompt","subscribed");
+});
+
+laterBtn.addEventListener("click",()=>{
+overlay.classList.remove("active");
+localStorage.setItem("push_last_prompt",Date.now());
+});
 </script>
 
 </body>
