@@ -2,183 +2,81 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Professional Admin Panel</title>
+<title>Desisavar Today Analytics</title>
 <style>
 body{
 margin:0;
 font-family:Arial;
+background:#0f172a;
+color:#fff;
 display:flex;
-background:#f4f6f9;
-}
-
-/* Sidebar */
-.sidebar{
-width:220px;
-background:#1e1e2f;
-color:white;
+justify-content:center;
+align-items:center;
 height:100vh;
-padding:20px;
 }
-
-.sidebar h2{
+.panel{
+width:420px;
+background:#1e293b;
+padding:25px;
+border-radius:16px;
+box-shadow:0 0 40px rgba(0,0,0,.6);
+}
+h2{text-align:center;margin-bottom:15px}
+.date{
 text-align:center;
+margin-bottom:20px;
+color:#94a3b8;
 }
-
-.sidebar ul{
-list-style:none;
-padding:0;
-}
-
-.sidebar ul li{
-padding:12px;
-cursor:pointer;
-border-radius:5px;
-}
-
-.sidebar ul li:hover{
-background:#333;
-}
-
-/* Main */
-.main{
-flex:1;
-padding:30px;
-}
-
-/* Cards */
-.cards{
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-}
-
-.card{
-flex:1;
-min-width:200px;
-padding:20px;
+.stat{
+background:#334155;
+padding:18px;
 border-radius:12px;
-color:white;
-text-align:center;
-box-shadow:0 5px 10px rgba(0,0,0,0.1);
-}
-
-.card p{
-font-size:26px;
-margin:10px 0 0 0;
-}
-
-.blue{background:#3498db;}
-.green{background:#2ecc71;}
-.orange{background:#f39c12;}
-.red{background:#e74c3c;}
-
-/* Table */
-table{
-width:100%;
-border-collapse:collapse;
-background:white;
-margin-top:20px;
-}
-
-th,td{
-padding:12px;
-border:1px solid #ddd;
-text-align:center;
-}
-
-th{
-background:#f2f2f2;
-}
-
-/* Responsive */
-@media(max-width:768px){
-.sidebar{
-display:none;
-}
-body{
-flex-direction:column;
-}
+margin-bottom:15px;
+font-size:18px;
+display:flex;
+justify-content:space-between;
 }
 </style>
 </head>
+
 <body>
 
-<div class="sidebar">
-<h2>Admin</h2>
-<ul>
-<li onclick="showSection('dashboard')">Dashboard</li>
-<li onclick="showSection('users')">Users</li>
-<li onclick="logout()">Logout</li>
-</ul>
+<div class="panel">
+<h2>📊 Today Analytics</h2>
+<div class="date" id="date"></div>
+
+<div class="stat">
+<span>Today's Visits</span>
+<span id="visit">Loading...</span>
 </div>
 
-<div class="main">
-
-<!-- Dashboard -->
-<div id="dashboard" class="section">
-<h1>App Analytics</h1>
-
-<div class="cards">
-<div class="card blue">
-<h3>Total Installs</h3>
-<p id="installCount">2500</p>
+<div class="stat">
+<span>Today's Install Clicks</span>
+<span id="install">Loading...</span>
 </div>
 
-<div class="card green">
-<h3>New Users</h3>
-<p id="newUsers">180</p>
-</div>
-
-<div class="card orange">
-<h3>Total Users</h3>
-<p id="totalUsers">2320</p>
-</div>
-
-<div class="card red">
-<h3>App Shared</h3>
-<p id="sharedCount">540</p>
-</div>
-</div>
-</div>
-
-<!-- Users -->
-<div id="users" class="section" style="display:none;">
-<h1>User List</h1>
-
-<table>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Email</th>
-<th>Date</th>
-</tr>
-<tr>
-<td>1</td>
-<td>Rahul</td>
-<td>rahul@gmail.com</td>
-<td>22-02-2026</td>
-</tr>
-<tr>
-<td>2</td>
-<td>Aman</td>
-<td>aman@gmail.com</td>
-<td>21-02-2026</td>
-</tr>
-</table>
+<div class="stat">
+<span>Today's Share Clicks</span>
+<span id="share">Loading...</span>
 </div>
 
 </div>
 
 <script>
-function showSection(id){
-let sections=document.querySelectorAll('.section');
-sections.forEach(sec=>sec.style.display='none');
-document.getElementById(id).style.display='block';
+const WORKER="https://admin.yaartunah.workers.dev/?action=stats";
+
+async function loadStats(){
+  const res=await fetch(WORKER);
+  const data=await res.json();
+
+  document.getElementById("date").innerText = data.date;
+  document.getElementById("visit").innerText = data.visit;
+  document.getElementById("install").innerText = data.install;
+  document.getElementById("share").innerText = data.share;
 }
 
-function logout(){
-alert("Logged Out Successfully!");
-}
+loadStats();
+setInterval(loadStats,5000);
 </script>
 
 </body>
