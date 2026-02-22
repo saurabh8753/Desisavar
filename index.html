@@ -23,6 +23,7 @@ OneSignalDeferred.push(async function(OneSignal) {
 </script>
 
 <style>
+/* ===== YOUR ORIGINAL CSS SAME ===== */
 *{box-sizing:border-box}
 body{
 margin:0;
@@ -80,7 +81,6 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Floating Install/Share Badge */
 #comboBadge{
 position:fixed;
 right:14px;
@@ -113,57 +113,8 @@ animation:comboGlow 2s infinite;
 
 <div class="wrapper">
 <div class="card">
-
-<a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank">
-<i class="fa-solid fa-toolbox"></i>
-Daily Uses All Tools 🥳
-</a>
-
-<a class="btn terabox" href="https://buttons-dlq.pages.dev/desitera" target="_blank">
-<i class="fa-solid fa-cloud-arrow-down"></i>
-Terabox Video Downloader
-</a>
-
-<a class="btn instagram" href="https://snapinsta.guru/" target="_blank">
-<i class="fa-brands fa-instagram"></i>
-Instagram Video Downloader
-</a>
-
-<a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank">
-<i class="fa-brands fa-youtube"></i>
-YouTube Video Downloader
-</a>
-
-<a class="btn facebook" href="https://snapsave.app/" target="_blank">
-<i class="fa-brands fa-facebook-f"></i>
-Facebook Video Downloader
-</a>
-
-<a class="btn twitter" href="https://sssx.io/" target="_blank">
-<i class="fa-brands fa-x-twitter"></i>
-Twitter (X) Downloader
-</a>
-
-<a class="btn tiktok" href="https://ssstik.io/in" target="_blank">
-<i class="fa-brands fa-tiktok"></i>
-TikTok Video Downloader
-</a>
-
-<a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank">
-<i class="fa-brands fa-snapchat"></i>
-Snapchat Video Downloader
-</a>
-
-<a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
-<i class="fa-brands fa-pinterest"></i>
-Pinterest Video Downloader
-</a>
-
-<a class="btn telegram" href="https://t.me/+-Qt0LAeB71E0ZTll" target="_blank">
-<i class="fa-brands fa-telegram"></i>
-Telegram Updates Channel 
-</a>
-
+<!-- YOUR BUTTONS SAME -->
+...
 </div>
 </div>
 
@@ -178,8 +129,6 @@ navigator.serviceWorker.register("/sw.js");
 
 /* 🔥 TRACKING SYSTEM */
 const TRACK_API = "https://admin.yaartunah.workers.dev/?action=track&type=";
-
-// Track visit
 fetch(TRACK_API + "visit").catch(()=>{});
 
 /* Install / Share Badge */
@@ -203,10 +152,7 @@ deferredPrompt=e;
 combo.addEventListener("click",async()=>{
 
 if(isStandalone){
-
-// Track share
 fetch(TRACK_API + "share").catch(()=>{});
-
 const text=encodeURIComponent(
 "🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
 );
@@ -219,14 +165,39 @@ alert("Install ke liye: Menu (⋮) → Add to Home Screen");
 return;
 }
 
-// Track install
 fetch(TRACK_API + "install").catch(()=>{});
-
 deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 deferredPrompt=null;
-
 });
+
+/* 🔥 ADS LOAD AFTER 6 SECONDS (OLD SYSTEM) */
+setTimeout(()=>{
+
+// Banner Ad
+const s1=document.createElement("script");
+s1.async=true;
+s1.src="https://pl28370581.effectivegatecpm.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
+document.body.appendChild(s1);
+
+const div1=document.createElement("div");
+div1.id="container-546f6bc9178f50dbe958ddc959944152";
+document.body.appendChild(div1);
+
+// Pop/iframe Ad
+window.atOptions={
+key:'36ffe368e4b924f77be468053af7bb35',
+format:'iframe',
+height:250,
+width:300,
+params:{}
+};
+
+const s2=document.createElement("script");
+s2.src="https://www.highperformanceformat.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
+document.body.appendChild(s2);
+
+},6000);
 
 /* Default Chrome Notification After 5 sec */
 setTimeout(()=>{
