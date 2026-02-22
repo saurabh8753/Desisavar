@@ -16,7 +16,6 @@
       min-height:100vh;
     }
 
-    /* ===== FULLSCREEN OVERLAY (GRADIENT THEME) ===== */
     .install-overlay{
       position:fixed;
       inset:0;
@@ -104,7 +103,6 @@
 
 <body>
 
-<!-- ===== FULL SCREEN INSTALL POPUP ===== -->
 <div id="installOverlay" class="install-overlay">
   <div class="install-box">
     <button class="close-btn" id="closePopup">✕</button>
@@ -138,23 +136,23 @@
   const installBtn = document.getElementById("popupInstallBtn");
   const closeBtn = document.getElementById("closePopup");
 
+  const TRACK_API = "https://admin.yaartunah.workers.dev/?action=track&type=";
+
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("/sw.js");
   }
 
-  // Capture PWA install event
   window.addEventListener("beforeinstallprompt", (e) => {
     e.preventDefault();
     deferredPrompt = e;
 
-    // ⏱ Auto popup after 1 second
     setTimeout(() => {
       overlay.style.display = "flex";
     }, 1000);
   });
 
-  // Real user interaction → install
   installBtn.addEventListener("click", async () => {
+
     if (!deferredPrompt) {
       alert(
         "Install option not available.\n\n" +
@@ -163,13 +161,18 @@
       return;
     }
 
+    /* 🔥 INSTALL TRACKING ONLY */
+    navigator.sendBeacon(
+      TRACK_API + "install"
+    );
+
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
+
     deferredPrompt = null;
     overlay.style.display = "none";
   });
 
-  // Close popup
   closeBtn.addEventListener("click", () => {
     overlay.style.display = "none";
   });
