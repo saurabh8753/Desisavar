@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#3248f5">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- 🔥 OneSignal SDK -->
+<!-- OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -40,7 +40,6 @@ color:#fff;
 text-align:center;
 font-size:22px;
 font-weight:800;
-box-shadow:0 5px 20px rgba(0,0,0,.12);
 }
 .wrapper{
 width:100%;
@@ -80,7 +79,6 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Floating Install/Share Badge */
 #comboBadge{
 position:fixed;
 right:14px;
@@ -96,13 +94,6 @@ justify-content:center;
 font-size:22px;
 cursor:pointer;
 z-index:9999;
-box-shadow:0 0 25px rgba(109,40,255,.6);
-animation:comboGlow 2s infinite;
-}
-@keyframes comboGlow{
-0%{transform:scale(1)}
-50%{transform:scale(1.1)}
-100%{transform:scale(1)}
 }
 </style>
 </head>
@@ -115,53 +106,31 @@ animation:comboGlow 2s infinite;
 <div class="card">
 
 <a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank">
-<i class="fa-solid fa-toolbox"></i>
-Daily Uses All Tools 🥳
+<i class="fa-solid fa-toolbox"></i> Daily Uses All Tools
 </a>
 
 <a class="btn terabox" href="https://buttons-dlq.pages.dev/desitera" target="_blank">
-<i class="fa-solid fa-cloud-arrow-down"></i>
-Terabox Video Downloader
+<i class="fa-solid fa-cloud-arrow-down"></i> Terabox Downloader
 </a>
 
 <a class="btn instagram" href="https://snapinsta.guru/" target="_blank">
-<i class="fa-brands fa-instagram"></i>
-Instagram Video Downloader
+<i class="fa-brands fa-instagram"></i> Instagram Downloader
 </a>
 
 <a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank">
-<i class="fa-brands fa-youtube"></i>
-YouTube Video Downloader
+<i class="fa-brands fa-youtube"></i> YouTube Downloader
 </a>
 
 <a class="btn facebook" href="https://snapsave.app/" target="_blank">
-<i class="fa-brands fa-facebook-f"></i>
-Facebook Video Downloader
+<i class="fa-brands fa-facebook-f"></i> Facebook Downloader
 </a>
 
 <a class="btn twitter" href="https://sssx.io/" target="_blank">
-<i class="fa-brands fa-x-twitter"></i>
-Twitter (X) Downloader
-</a>
-
-<a class="btn tiktok" href="https://ssstik.io/in" target="_blank">
-<i class="fa-brands fa-tiktok"></i>
-TikTok Video Downloader
-</a>
-
-<a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank">
-<i class="fa-brands fa-snapchat"></i>
-Snapchat Video Downloader
-</a>
-
-<a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
-<i class="fa-brands fa-pinterest"></i>
-Pinterest Video Downloader
+<i class="fa-brands fa-x-twitter"></i> Twitter Downloader
 </a>
 
 <a class="btn telegram" href="https://t.me/+-Qt0LAeB71E0ZTll" target="_blank">
-<i class="fa-brands fa-telegram"></i>
-Telegram Updates Channel 
+<i class="fa-brands fa-telegram"></i> Telegram Channel
 </a>
 
 </div>
@@ -172,11 +141,19 @@ Telegram Updates Channel
 </div>
 
 <script>
-if ("serviceWorker" in navigator) {
-navigator.serviceWorker.register("/sw.js");
+const WORKER = "https://admin.yaartunah.workers.dev";
+
+/* ===== SAFE TRACK FUNCTION ===== */
+function track(type){
+  fetch(`${WORKER}/?action=track&type=${type}`)
+    .then(()=>{})
+    .catch(()=>{});
 }
 
-/* ===== Install / Share Badge ===== */
+/* Track visit */
+track("visit");
+
+/* Install/Share Badge */
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
 let deferredPrompt=null;
@@ -195,30 +172,29 @@ deferredPrompt=e;
 });
 
 combo.addEventListener("click",async()=>{
+
 if(isStandalone){
+track("share");
+
 const text=encodeURIComponent(
-"🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
+"🚀 Install Desisaver App\nDownload now:\nhttps://shorturl.at/qfsIm"
 );
 window.open(`https://wa.me/?text=${text}`,"_blank");
 return;
 }
+
 if(!deferredPrompt){
-alert("Install ke liye: Menu (⋮) → Add to Home Screen");
+alert("Install: Menu (⋮) → Add to Home Screen");
 return;
 }
+
+track("install");
+
 deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 deferredPrompt=null;
-});
 
-/* ===== Trigger Default Chrome Permission After 5 sec ===== */
-setTimeout(()=>{
-if(Notification.permission==="default"){
-OneSignalDeferred.push(async function(OneSignal){
-await OneSignal.Notifications.requestPermission();
 });
-}
-},5000);
 </script>
 
 </body>
