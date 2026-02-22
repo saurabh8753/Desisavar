@@ -17,10 +17,7 @@ OneSignalDeferred.push(async function(OneSignal) {
   await OneSignal.init({
     appId: "e86af341-20e6-480f-8650-09a42abd5b51",
     notifyButton: { enable: false },
-    welcomeNotification: {
-      title: "🔥 Welcome to Desisavar!",
-      message: "अब आप latest updates और tools alerts पाएंगे 🚀"
-    }
+    autoResubscribe: true
   });
 });
 </script>
@@ -107,71 +104,6 @@ animation:comboGlow 2s infinite;
 50%{transform:scale(1.1)}
 100%{transform:scale(1)}
 }
-
-/* 🔥 Premium Push UI */
-#pushOverlay{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.55);
-backdrop-filter:blur(6px);
-display:flex;
-align-items:center;
-justify-content:center;
-z-index:99999;
-opacity:0;
-pointer-events:none;
-transition:.4s ease;
-}
-#pushOverlay.active{
-opacity:1;
-pointer-events:auto;
-}
-.pushCard{
-width:90%;
-max-width:360px;
-background:linear-gradient(180deg,#111,#1e1e1e);
-border-radius:18px;
-padding:22px;
-color:#fff;
-text-align:center;
-transform:translateY(40px);
-transition:.4s ease;
-box-shadow:0 25px 50px rgba(0,0,0,.5);
-}
-#pushOverlay.active .pushCard{
-transform:translateY(0);
-}
-.pushTitle{
-font-size:20px;
-font-weight:800;
-margin-bottom:10px;
-}
-.pushDesc{
-font-size:14px;
-opacity:.85;
-margin-bottom:18px;
-}
-.pushButtons{
-display:flex;
-gap:10px;
-}
-.pushBtn{
-flex:1;
-padding:10px;
-border-radius:10px;
-border:none;
-font-weight:700;
-cursor:pointer;
-font-size:14px;
-}
-.allowBtn{
-background:linear-gradient(45deg,#3248f5,#6d28ff);
-color:#fff;
-}
-.laterBtn{
-background:#2a2a2a;
-color:#aaa;
-}
 </style>
 </head>
 
@@ -239,26 +171,12 @@ Telegram Updates Channel
 <i id="comboIcon" class="fa-solid fa-download"></i>
 </div>
 
-<!-- 🔔 Push Overlay -->
-<div id="pushOverlay">
-<div class="pushCard">
-<div class="pushTitle">🔔 Enable Notifications</div>
-<div class="pushDesc">
-Get instant updates, new tools & exclusive alerts directly on your device.
-</div>
-<div class="pushButtons">
-<button class="pushBtn laterBtn" id="laterBtn">Maybe Later</button>
-<button class="pushBtn allowBtn" id="allowBtn">Allow</button>
-</div>
-</div>
-</div>
-
 <script>
 if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
-/* ===== INSTALL / SHARE BADGE ===== */
+/* ===== Install / Share Badge ===== */
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
 let deferredPrompt=null;
@@ -293,51 +211,14 @@ await deferredPrompt.userChoice;
 deferredPrompt=null;
 });
 
-/* ===== SMART AUTO RE-PROMPT ===== */
-const overlay=document.getElementById("pushOverlay");
-const allowBtn=document.getElementById("allowBtn");
-const laterBtn=document.getElementById("laterBtn");
-
-const REPROMPT_HOURS = 24;
-
-function shouldShowPrompt(){
-if(Notification.permission!=="default") return false;
-const lastPrompt=localStorage.getItem("push_last_prompt");
-if(!lastPrompt) return true;
-if(lastPrompt==="subscribed") return false;
-const diff=Date.now()-parseInt(lastPrompt);
-const hoursPassed=diff/(1000*60*60);
-return hoursPassed>=REPROMPT_HOURS;
-}
-
-function waitForOneSignal(callback){
-if(window.OneSignal){callback();}
-else{setTimeout(()=>waitForOneSignal(callback),300);}
-}
-
-if(shouldShowPrompt()){
+/* ===== Trigger Default Chrome Permission After 5 sec ===== */
 setTimeout(()=>{
-overlay.classList.add("active");
-localStorage.setItem("push_last_prompt",Date.now());
-},6000);
-}
-
-allowBtn.addEventListener("click",()=>{
-overlay.classList.remove("active");
-setTimeout(()=>{
-waitForOneSignal(()=>{
+if(Notification.permission==="default"){
 OneSignalDeferred.push(async function(OneSignal){
 await OneSignal.Notifications.requestPermission();
 });
-});
-},400);
-localStorage.setItem("push_last_prompt","subscribed");
-});
-
-laterBtn.addEventListener("click",()=>{
-overlay.classList.remove("active");
-localStorage.setItem("push_last_prompt",Date.now());
-});
+}
+},5000);
 </script>
 
 </body>
