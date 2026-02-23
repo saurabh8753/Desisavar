@@ -79,13 +79,12 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Ad Containers */
+/* Ad Placement Style */
 .ad-slot {
-  margin: 15px 0;
-  min-height: 250px;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin: 10px 0;
 }
 
 #comboBadge{
@@ -118,7 +117,7 @@ animation:comboGlow 2s infinite;
 
 <header>Desisavar</header>
 
-<div id="ad-top" class="ad-slot"></div>
+<div id="ad-top-placeholder" class="ad-slot"></div>
 
 <div class="wrapper">
 <div class="card">
@@ -176,45 +175,48 @@ Telegram Updates Channel
 </div>
 </div>
 
-<div id="ad-bottom" class="ad-slot"></div>
+<div id="ad-bottom-placeholder" class="ad-slot"></div>
 
 <div id="comboBadge">
 <i id="comboIcon" class="fa-solid fa-download"></i>
 </div>
 
 <script>
-/* ===== Delayed Ads Loading (5 Seconds) ===== */
+/* ===== ADS DELAY LOADING (5 SECONDS) ===== */
 setTimeout(() => {
-    // Load First Ad (Iframe format)
-    const adTop = document.getElementById('ad-top');
-    window.atOptions = {
-        'key' : '36ffe368e4b924f77be468053af7bb35',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-    };
-    const script1 = document.createElement('script');
-    script1.src = "https://yawncollaremotion.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
-    adTop.appendChild(script1);
+  // Loading Ad 1
+  const topAdContainer = document.getElementById('ad-top-placeholder');
+  window.atOptions = {
+    'key' : '36ffe368e4b924f77be468053af7bb35',
+    'format' : 'iframe',
+    'height' : 250,
+    'width' : 300,
+    'params' : {}
+  };
+  const script1 = document.createElement('script');
+  script1.src = "https://yawncollaremotion.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
+  topAdContainer.appendChild(script1);
 
-    // Load Second Ad (Container format)
-    const adBottom = document.getElementById('ad-bottom');
-    const adDiv = document.createElement('div');
-    adDiv.id = "container-546f6bc9178f50dbe958ddc959944152";
-    adBottom.appendChild(adDiv);
+  // Loading Ad 2
+  const bottomAdContainer = document.getElementById('ad-bottom-placeholder');
+  const adDiv = document.createElement('div');
+  adDiv.id = "container-546f6bc9178f50dbe958ddc959944152";
+  bottomAdContainer.appendChild(adDiv);
 
-    const script2 = document.createElement('script');
-    script2.async = true;
-    script2.dataset.cfasync = "false";
-    script2.src = "https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
-    adBottom.appendChild(script2);
+  const script2 = document.createElement('script');
+  script2.async = true;
+  script2.setAttribute('data-cfasync', 'false');
+  script2.src = "https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
+  bottomAdContainer.appendChild(script2);
 }, 5000);
 
-/* ===== PWA and OneSignal Scripts ===== */
+/* ===== EXISTING SCRIPTS ===== */
 if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
+
+const TRACK_API = "https://admin.yaartunah.workers.dev/?action=track&type=";
+fetch(TRACK_API + "visit").catch(()=>{});
 
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
@@ -235,6 +237,7 @@ deferredPrompt=e;
 
 combo.addEventListener("click",async()=>{
 if(isStandalone){
+fetch(TRACK_API + "share").catch(()=>{});
 const text=encodeURIComponent(
 "🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
 );
@@ -245,6 +248,7 @@ if(!deferredPrompt){
 alert("Install ke liye: Menu (⋮) → Add to Home Screen");
 return;
 }
+fetch(TRACK_API + "install").catch(()=>{});
 deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 deferredPrompt=null;
@@ -256,7 +260,7 @@ OneSignalDeferred.push(async function(OneSignal){
 await OneSignal.Notifications.requestPermission();
 });
 }
-},7000); // Thoda aur delay taki ads aur notifications clash na karein
+},5000);
 </script>
 
 </body>
