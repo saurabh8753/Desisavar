@@ -79,18 +79,39 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Ad Placement Style */
-.ad-slot {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin: 10px 0;
+/* Sticky Ad Style */
+#sticky-ad-container {
+    position: fixed;
+    bottom: -100px; /* Shuru me hidden rahega */
+    left: 0;
+    width: 100%;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: bottom 0.5s ease-in-out;
+}
+#close-ad-btn {
+    position: absolute;
+    top: -25px;
+    right: 10px;
+    background: #333;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
 }
 
 #comboBadge{
 position:fixed;
 right:14px;
-bottom:18px;
+bottom:80px; /* Sticky ad ki wajah se thoda upar shift kiya */
 width:60px;
 height:60px;
 border-radius:50%;
@@ -117,104 +138,51 @@ animation:comboGlow 2s infinite;
 
 <header>Desisavar</header>
 
-<div id="ad-top-placeholder" class="ad-slot"></div>
-
 <div class="wrapper">
 <div class="card">
-
-<a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank">
-<i class="fa-solid fa-toolbox"></i>
-Daily Uses All Tools 🥳
-</a>
-
-<a class="btn terabox" href="https://buttons-dlq.pages.dev/desitera" target="_blank">
-<i class="fa-solid fa-cloud-arrow-down"></i>
-Terabox Video Downloader
-</a>
-
-<a class="btn instagram" href="https://snapinsta.guru/" target="_blank">
-<i class="fa-brands fa-instagram"></i>
-Instagram Video Downloader
-</a>
-
-<a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank">
-<i class="fa-brands fa-youtube"></i>
-YouTube Video Downloader
-</a>
-
-<a class="btn facebook" href="https://snapsave.app/" target="_blank">
-<i class="fa-brands fa-facebook-f"></i>
-Facebook Video Downloader
-</a>
-
-<a class="btn twitter" href="https://sssx.io/" target="_blank">
-<i class="fa-brands fa-x-twitter"></i>
-Twitter (X) Downloader
-</a>
-
-<a class="btn tiktok" href="https://ssstik.io/in" target="_blank">
-<i class="fa-brands fa-tiktok"></i>
-TikTok Video Downloader
-</a>
-
-<a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank">
-<i class="fa-brands fa-snapchat"></i>
-Snapchat Video Downloader
-</a>
-
-<a class="btn pinterest" href="https://pindown.io/en1" target="_blank">
-<i class="fa-brands fa-pinterest"></i>
-Pinterest Video Downloader
-</a>
-
-<a class="btn telegram" href="https://t.me/+-Qt0LAeB71E0ZTll" target="_blank">
-<i class="fa-brands fa-telegram"></i>
-Telegram Updates Channel 
-</a>
-
+<a class="btn dailytools" href="https://buttons-dlq.pages.dev/" target="_blank"><i class="fa-solid fa-toolbox"></i>Daily Uses All Tools 🥳</a>
+<a class="btn terabox" href="https://buttons-dlq.pages.dev/desitera" target="_blank"><i class="fa-solid fa-cloud-arrow-down"></i>Terabox Video Downloader</a>
+<a class="btn instagram" href="https://snapinsta.guru/" target="_blank"><i class="fa-brands fa-instagram"></i>Instagram Video Downloader</a>
+<a class="btn youtube" href="https://turboscribe.ai/downloader/youtube/video" target="_blank"><i class="fa-brands fa-youtube"></i>YouTube Video Downloader</a>
+<a class="btn facebook" href="https://snapsave.app/" target="_blank"><i class="fa-brands fa-facebook-f"></i>Facebook Video Downloader</a>
+<a class="btn twitter" href="https://sssx.io/" target="_blank"><i class="fa-brands fa-x-twitter"></i>Twitter (X) Downloader</a>
+<a class="btn tiktok" href="https://ssstik.io/in" target="_blank"><i class="fa-brands fa-tiktok"></i>TikTok Video Downloader</a>
+<a class="btn snapchat" href="https://postsyncer.com/tools/snapchat-video-downloader" target="_blank"><i class="fa-brands fa-snapchat"></i>Snapchat Video Downloader</a>
+<a class="btn pinterest" href="https://pindown.io/en1" target="_blank"><i class="fa-brands fa-pinterest"></i>Pinterest Video Downloader</a>
+<a class="btn telegram" href="https://t.me/+-Qt0LAeB71E0ZTll" target="_blank"><i class="fa-brands fa-telegram"></i>Telegram Updates Channel</a>
 </div>
 </div>
 
-<div id="ad-bottom-placeholder" class="ad-slot"></div>
+<div id="sticky-ad-container">
+    <button id="close-ad-btn" onclick="document.getElementById('sticky-ad-container').style.display='none'">X</button>
+    <div id="container-546f6bc9178f50dbe958ddc959944152"></div>
+</div>
 
 <div id="comboBadge">
 <i id="comboIcon" class="fa-solid fa-download"></i>
 </div>
 
 <script>
-/* ===== ADS DELAY LOADING (5 SECONDS) ===== */
+/* ===== Delayed Sticky Ad Loading (5 Seconds) ===== */
 setTimeout(() => {
-  // Loading Ad 1
-  const topAdContainer = document.getElementById('ad-top-placeholder');
-  window.atOptions = {
-    'key' : '36ffe368e4b924f77be468053af7bb35',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-  const script1 = document.createElement('script');
-  script1.src = "https://yawncollaremotion.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
-  topAdContainer.appendChild(script1);
+    const container = document.getElementById('sticky-ad-container');
+    
+    // Script load karo
+    const script = document.createElement('script');
+    script.async = true;
+    script.dataset.cfasync = "false";
+    script.src = "https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
+    container.appendChild(script);
 
-  // Loading Ad 2
-  const bottomAdContainer = document.getElementById('ad-bottom-placeholder');
-  const adDiv = document.createElement('div');
-  adDiv.id = "container-546f6bc9178f50dbe958ddc959944152";
-  bottomAdContainer.appendChild(adDiv);
-
-  const script2 = document.createElement('script');
-  script2.async = true;
-  script2.setAttribute('data-cfasync', 'false');
-  script2.src = "https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
-  bottomAdContainer.appendChild(script2);
+    // Ad dikhao
+    container.style.bottom = "0";
 }, 5000);
 
-/* ===== EXISTING SCRIPTS ===== */
 if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
+/* TRACKING SYSTEM */
 const TRACK_API = "https://admin.yaartunah.workers.dev/?action=track&type=";
 fetch(TRACK_API + "visit").catch(()=>{});
 
@@ -222,13 +190,8 @@ const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
 let deferredPrompt=null;
 
-const isStandalone=
-window.matchMedia("(display-mode: standalone)").matches||
-window.navigator.standalone===true;
-
-icon.className=isStandalone
-?"fa-solid fa-share-nodes"
-:"fa-solid fa-download";
+const isStandalone= window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone===true;
+icon.className=isStandalone ?"fa-solid fa-share-nodes" :"fa-solid fa-download";
 
 window.addEventListener("beforeinstallprompt",(e)=>{
 e.preventDefault();
@@ -238,9 +201,7 @@ deferredPrompt=e;
 combo.addEventListener("click",async()=>{
 if(isStandalone){
 fetch(TRACK_API + "share").catch(()=>{});
-const text=encodeURIComponent(
-"🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
-);
+const text=encodeURIComponent("🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm");
 window.open(`https://wa.me/?text=${text}`,"_blank");
 return;
 }
@@ -260,7 +221,7 @@ OneSignalDeferred.push(async function(OneSignal){
 await OneSignal.Notifications.requestPermission();
 });
 }
-},5000);
+},7000);
 </script>
 
 </body>
