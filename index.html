@@ -9,7 +9,6 @@
 <meta name="theme-color" content="#3248f5">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- 🔥 OneSignal SDK -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -80,7 +79,15 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Floating Install/Share Badge */
+/* Ad Containers */
+.ad-slot {
+  margin: 15px 0;
+  min-height: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 #comboBadge{
 position:fixed;
 right:14px;
@@ -110,6 +117,8 @@ animation:comboGlow 2s infinite;
 <body>
 
 <header>Desisavar</header>
+
+<div id="ad-top" class="ad-slot"></div>
 
 <div class="wrapper">
 <div class="card">
@@ -167,22 +176,46 @@ Telegram Updates Channel
 </div>
 </div>
 
+<div id="ad-bottom" class="ad-slot"></div>
+
 <div id="comboBadge">
 <i id="comboIcon" class="fa-solid fa-download"></i>
 </div>
 
 <script>
+/* ===== Delayed Ads Loading (5 Seconds) ===== */
+setTimeout(() => {
+    // Load First Ad (Iframe format)
+    const adTop = document.getElementById('ad-top');
+    window.atOptions = {
+        'key' : '36ffe368e4b924f77be468053af7bb35',
+        'format' : 'iframe',
+        'height' : 250,
+        'width' : 300,
+        'params' : {}
+    };
+    const script1 = document.createElement('script');
+    script1.src = "https://yawncollaremotion.com/36ffe368e4b924f77be468053af7bb35/invoke.js";
+    adTop.appendChild(script1);
+
+    // Load Second Ad (Container format)
+    const adBottom = document.getElementById('ad-bottom');
+    const adDiv = document.createElement('div');
+    adDiv.id = "container-546f6bc9178f50dbe958ddc959944152";
+    adBottom.appendChild(adDiv);
+
+    const script2 = document.createElement('script');
+    script2.async = true;
+    script2.dataset.cfasync = "false";
+    script2.src = "https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
+    adBottom.appendChild(script2);
+}, 5000);
+
+/* ===== PWA and OneSignal Scripts ===== */
 if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
-/* 🔥 TRACKING SYSTEM */
-const TRACK_API = "https://admin.yaartunah.workers.dev/?action=track&type=";
-
-// Track visit
-fetch(TRACK_API + "visit").catch(()=>{});
-
-/* Install / Share Badge */
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
 let deferredPrompt=null;
@@ -201,41 +234,29 @@ deferredPrompt=e;
 });
 
 combo.addEventListener("click",async()=>{
-
 if(isStandalone){
-
-// Track share
-fetch(TRACK_API + "share").catch(()=>{});
-
 const text=encodeURIComponent(
 "🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
 );
 window.open(`https://wa.me/?text=${text}`,"_blank");
 return;
 }
-
 if(!deferredPrompt){
 alert("Install ke liye: Menu (⋮) → Add to Home Screen");
 return;
 }
-
-// Track install
-fetch(TRACK_API + "install").catch(()=>{});
-
 deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 deferredPrompt=null;
-
 });
 
-/* Default Chrome Notification After 5 sec */
 setTimeout(()=>{
 if(Notification.permission==="default"){
 OneSignalDeferred.push(async function(OneSignal){
 await OneSignal.Notifications.requestPermission();
 });
 }
-},5000);
+},7000); // Thoda aur delay taki ads aur notifications clash na karein
 </script>
 
 </body>
