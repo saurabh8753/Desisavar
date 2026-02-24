@@ -9,6 +9,7 @@
 <meta name="theme-color" content="#3248f5">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+<!-- 🔥 OneSignal SDK -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script>
 window.OneSignalDeferred = window.OneSignalDeferred || [];
@@ -68,7 +69,9 @@ font-size:15px;
 transition:.25s;
 }
 .btn:hover{transform:translateY(-2px) scale(1.01)}
+
 .dailytools{background:#0ea5e9}
+.ai-tools{background:linear-gradient(45deg,#6366f1,#8b5cf6)}
 .terabox{background:#5b6bff}
 .instagram{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
 .youtube{background:#ff0000}
@@ -79,15 +82,15 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Ad Section Styling */
-#bodyAdContainer {
-display: none; /* Initially hidden */
-margin: 20px 0;
-text-align: center;
-width: 100%;
+/* Ad Section */
+#bodyAdContainer{
+display:none;
+margin:20px 0;
+text-align:center;
+width:100%;
 }
 
-/* Floating Install/Share Badge */
+/* Floating Badge */
 #comboBadge{
 position:fixed;
 right:14px;
@@ -166,29 +169,33 @@ Snapchat Video Downloader
 Pinterest Video Downloader
 </a>
 
+<!-- ✅ NEW AI BUTTON (Telegram ke upar) -->
+<a class="btn ai-tools" href="https://buttons-dlq.pages.dev/" target="_blank">
+<i class="fa-solid fa-robot"></i>
+All AI Tools – Daily Use 🤖
+</a>
+
 <a class="btn telegram" href="https://t.me/+-Qt0LAeB71E0ZTll" target="_blank">
 <i class="fa-brands fa-telegram"></i>
 Telegram Updates Channel 
 </a>
-  
 
 </div>
 
+<!-- Body Ad -->
 <div id="bodyAdContainer">
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '36ffe368e4b924f77be468053af7bb35',
-        'format' : 'iframe',
-        'height' : 250,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="https://yawncollaremotion.com/36ffe368e4b924f77be468053af7bb35/invoke.js"></script>
+<script type="text/javascript">
+atOptions = {
+'key' : '36ffe368e4b924f77be468053af7bb35',
+'format' : 'iframe',
+'height' : 250,
+'width' : 300,
+'params' : {}
+};
+</script>
+<script type="text/javascript" src="https://yawncollaremotion.com/36ffe368e4b924f77be468053af7bb35/invoke.js"></script>
 </div>
-<script async="async" data-cfasync="false" src="https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js"></script>
-<div id="container-546f6bc9178f50dbe958ddc959944152"></div>
-  
+
 </div>
 
 <div id="comboBadge">
@@ -200,13 +207,11 @@ if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
 
-/* 🔥 TRACKING SYSTEM */
-const TRACK_API = "https://admin.yaartunah.workers.dev/?action=track&type=";
+/* 🔥 TRACKING */
+const TRACK_API="https://admin.yaartunah.workers.dev/?action=track&type=";
+fetch(TRACK_API+"visit").catch(()=>{});
 
-// Track visit
-fetch(TRACK_API + "visit").catch(()=>{});
-
-/* Install / Share Badge */
+/* Badge */
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
 let deferredPrompt=null;
@@ -215,9 +220,7 @@ const isStandalone=
 window.matchMedia("(display-mode: standalone)").matches||
 window.navigator.standalone===true;
 
-icon.className=isStandalone
-?"fa-solid fa-share-nodes"
-:"fa-solid fa-download";
+icon.className=isStandalone?"fa-solid fa-share-nodes":"fa-solid fa-download";
 
 window.addEventListener("beforeinstallprompt",(e)=>{
 e.preventDefault();
@@ -225,15 +228,9 @@ deferredPrompt=e;
 });
 
 combo.addEventListener("click",async()=>{
-
 if(isStandalone){
-
-// Track share
-fetch(TRACK_API + "share").catch(()=>{});
-
-const text=encodeURIComponent(
-"🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm"
-);
+fetch(TRACK_API+"share").catch(()=>{});
+const text=encodeURIComponent("🚀 Install Desisaver App\nAll-in-one Video Downloader\n\nDownload now:\nhttps://shorturl.at/qfsIm");
 window.open(`https://wa.me/?text=${text}`,"_blank");
 return;
 }
@@ -243,24 +240,28 @@ alert("Install ke liye: Menu (⋮) → Add to Home Screen");
 return;
 }
 
-// Track install
-fetch(TRACK_API + "install").catch(()=>{});
-
+fetch(TRACK_API+"install").catch(()=>{});
 deferredPrompt.prompt();
 await deferredPrompt.userChoice;
 deferredPrompt=null;
-
 });
 
-/* 🔥 5 SECOND AD DELAY SYSTEM */
-setTimeout(() => {
-    const adSection = document.getElementById("bodyAdContainer");
-    if (adSection) {
-        adSection.style.display = "block";
-    }
-}, 5000);
+/* 🔥 ALL ADS AFTER 5 SECONDS */
+setTimeout(()=>{
+document.getElementById("bodyAdContainer").style.display="block";
 
-/* Default Chrome Notification After 5 sec */
+const s1=document.createElement("script");
+s1.async=true;
+s1.src="https://yawncollaremotion.com/546f6bc9178f50dbe958ddc959944152/invoke.js";
+document.body.appendChild(s1);
+
+const div1=document.createElement("div");
+div1.id="container-546f6bc9178f50dbe958ddc959944152";
+document.body.appendChild(div1);
+
+},5000);
+
+/* Chrome Notification after 5 sec */
 setTimeout(()=>{
 if(Notification.permission==="default"){
 OneSignalDeferred.push(async function(OneSignal){
@@ -268,6 +269,7 @@ await OneSignal.Notifications.requestPermission();
 });
 }
 },5000);
+
 </script>
 
 </body>
