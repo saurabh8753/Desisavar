@@ -2,147 +2,134 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-Platform PRO Downloader</title>
+<title>PRO Multi Platform Downloader</title>
 
 <style>
-body{
-  background:#0f172a;
-  font-family:Arial;
-  color:white;
-  padding:20px;
-}
-.container{
-  max-width:600px;
-  margin:auto;
-}
-h2{
-  text-align:center;
-}
-input{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:none;
-  margin:15px 0;
-}
-button{
-  width:100%;
-  padding:14px;
-  background:#ff3b5c;
-  border:none;
-  border-radius:10px;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-button:disabled{
-  opacity:0.6;
-}
-.card{
-  background:#1e293b;
-  padding:12px;
-  border-radius:12px;
-  margin-top:20px;
-}
-video,img{
-  width:100%;
-  border-radius:10px;
-}
-a{
-  display:block;
-  margin-top:8px;
-  color:#22c55e;
-  font-weight:bold;
-}
-.error{
-  color:#ff4d4d;
-  text-align:center;
-  margin-top:15px;
-}
-.loader{
-  text-align:center;
-  margin-top:15px;
-}
+body{background:#0f172a;color:white;font-family:Arial;padding:20px;}
+.container{max-width:700px;margin:auto;}
+input,select{width:100%;padding:14px;border-radius:10px;border:none;margin:10px 0;}
+button{width:100%;padding:14px;background:#ff3b5c;border:none;border-radius:10px;color:white;font-size:16px;cursor:pointer;margin-top:8px;}
+button:disabled{opacity:0.6;}
+.card{background:#1e293b;padding:15px;border-radius:12px;margin-top:20px;}
+video,img{width:100%;border-radius:10px;margin-top:10px;}
+a{display:block;margin-top:8px;color:#22c55e;font-weight:bold;}
+.error{text-align:center;color:#ff4d4d;margin-top:15px;}
+.loader{text-align:center;margin-top:15px;}
 </style>
 </head>
 <body>
 
 <div class="container">
-
 <h2>Multi-Platform PRO Downloader</h2>
 
-<input type="text" id="url" placeholder="Paste Instagram / YouTube / Facebook URL">
-
+<input type="text" id="url" placeholder="Paste URL here">
 <button id="btn" onclick="download()">Download</button>
 
 <div class="loader" id="loader"></div>
 <div class="error" id="error"></div>
 <div id="result"></div>
-
 </div>
 
 <script>
 
 async function download(){
 
-  const btn = document.getElementById("btn");
-  const url = document.getElementById("url").value.trim();
-  const loader = document.getElementById("loader");
-  const error = document.getElementById("error");
-  const result = document.getElementById("result");
+  const btn=document.getElementById("btn");
+  const url=document.getElementById("url").value.trim();
+  const loader=document.getElementById("loader");
+  const error=document.getElementById("error");
+  const result=document.getElementById("result");
 
+  loader.innerText="Processing...";
   error.innerText="";
   result.innerHTML="";
-  loader.innerText="Processing...";
   btn.disabled=true;
 
   try{
 
-    const res = await fetch("https://alldown.yaartunah.workers.dev/",{
+    const res=await fetch("https://alldown.yaartunah.workers.dev/",{
       method:"POST",
       headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ video_url:url })
+      body:JSON.stringify({video_url:url})
     });
 
-    const data = await res.json();
+    const data=await res.json();
     loader.innerText="";
     btn.disabled=false;
 
-    if(data.success===1){
+    if(!data.success){
+      error.innerText=data.message || "Download failed";
+      return;
+    }
 
-      const items = data.data || data.message?.data;
+    const items=data.data || data.message?.data;
+    if(!items || !items.length){
+      error.innerText="No media found";
+      return;
+    }
 
-      items.forEach((item,i)=>{
+    const item=items[0];
 
-        const card = document.createElement("div");
-        card.className="card";
+    const card=document.createElement("div");
+    card.className="card";
 
-        if(item.type==="video" || item.url.includes(".mp4")){
-          card.innerHTML=`
-            <video src="${item.url}" controls></video>
-            <a href="${item.url}" target="_blank">
-            ⬇ Download Video</a>
-          `;
-        }else{
-          card.innerHTML=`
-            <img src="${item.url}">
-            <a href="${item.url}" target="_blank">
-            ⬇ Download Image</a>
-          `;
+    // 🔥 YouTube with formats
+    if(item.formats){
+
+      let videoOptions="";
+      let audioOptions="";
+
+      item.formats.forEach(f=>{
+        if(f.quality && f.quality.includes("p")){
+          videoOptions+=`<option value="${f.url}">${f.quality}</option>`;
         }
-
-        result.appendChild(card);
+        if(f.mime_type && f.mime_type.includes("audio")){
+          audioOptions+=`<option value="${f.url}">Audio</option>`;
+        }
       });
 
-    }else{
-      error.innerText=data.message || "Download failed";
+      card.innerHTML=`
+        <h3>${item.title || "YouTube Video"}</h3>
+
+        <h4>🎥 Video Quality</h4>
+        <select id="videoSelect">${videoOptions}</select>
+        <button onclick="downloadSelected('videoSelect')">
+          Download Video
+        </button>
+
+        <h4 style="margin-top:15px;">🎵 Audio Only</h4>
+        <select id="audioSelect">${audioOptions}</select>
+        <button onclick="downloadSelected('audioSelect')">
+          Download Audio
+        </button>
+      `;
+
+    } else {
+
+      // Instagram / Others
+      card.innerHTML=`
+        ${item.url.includes(".mp4")
+          ? `<video src="${item.url}" controls></video>`
+          : `<img src="${item.url}">`
+        }
+        <a href="${item.url}" target="_blank">
+          ⬇ Download
+        </a>
+      `;
     }
+
+    result.appendChild(card);
 
   }catch(e){
     loader.innerText="";
     btn.disabled=false;
     error.innerText="Worker error";
   }
+}
+
+function downloadSelected(id){
+  const url=document.getElementById(id).value;
+  window.open(url,"_blank");
 }
 
 </script>
