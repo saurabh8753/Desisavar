@@ -1,314 +1,150 @@
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Desisavar</title>
-
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#3248f5">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Multi-Platform PRO Downloader</title>
 
 <style>
-  *{box-sizing:border-box}
-
-  body{
-    margin:0;
-    font-family: Inter, Arial, sans-serif;
-    background:linear-gradient(180deg,#e8ecff,#f8f9ff);
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  header{
-    width:100%;
-    padding:18px 0;
-    background:#3248f5;
-    color:#fff;
-    text-align:center;
-    font-size:22px;
-    font-weight:800;
-    letter-spacing:.3px;
-    box-shadow:0 5px 20px rgba(0,0,0,.12);
-  }
-
-  .wrapper{
-    width:100%;
-    max-width:520px;
-    padding:20px 14px 80px;
-  }
-
-  .card{
-    background:#fff;
-    border-radius:16px;
-    padding:20px;
-    box-shadow:0 15px 35px rgba(0,0,0,.08);
-    display:flex;
-    flex-direction:column;
-    gap:14px;
-  }
-
-  .btn{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:14px 16px;
-    border-radius:12px;
-    color:#fff;
-    text-decoration:none;
-    font-weight:700;
-    font-size:15px;
-    position:relative;
-    overflow:hidden;
-    transition:.25s;
-  }
-
-  .btn:hover{transform:translateY(-2px) scale(1.01)}
-  .btn i{font-size:18px}
-
-  .terabox{background:#5b6bff}
-  .instagram{background:linear-gradient(45deg,#f9ce34,#ee2a7b,#6228d7)}
-  .youtube{background:#ff0000}
-  .facebook{background:#1877f2}
-  .twitter{background:#000000}
-  .tiktok{background:#111}
-  .snapchat{background:#fffc00;color:#000}
-  .pinterest{background:#e60023}
-  .whatsapp{background:#25D366}
-  .telegram{background:#229ED9}
-
-  /* Popup */
-  .unlock-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:9999;
-    animation:fadeIn .25s ease forwards;
-  }
-
-  .unlock-box{
-    background:#ffffff;
-    padding:20px 18px;
-    border-radius:18px;
-    width:92%;
-    max-width:380px;
-    box-shadow:0 25px 55px rgba(0,0,0,.25);
-    text-align:center;
-    transform:scale(.9);
-    opacity:0;
-    animation:popUp .35s ease forwards;
-  }
-
-  .unlock-primary{
-    background:#3248f5;
-    color:#fff;
-    border:0;
-    padding:10px 14px;
-    border-radius:10px;
-    font-weight:700;
-    width:100%;
-  }
-
-  /* Toast */
-  .toast{
-    position:fixed;
-    top:14px;
-    left:50%;
-    transform:translateX(-50%) translateY(-25px);
-    background:#111827;
-    color:#fff;
-    padding:10px 14px;
-    border-radius:12px;
-    font-size:14px;
-    opacity:0;
-    pointer-events:none;
-    z-index:10000;
-    transition:.35s ease, transform .35s ease;
-  }
-
-  .toast.error{background:#dc2626}
-
-  .toast.show{
-    opacity:1;
-    transform:translateX(-50%) translateY(0);
-    box-shadow:0 12px 30px rgba(0,0,0,.25);
-  }
-
-  @keyframes popUp{to{transform:scale(1);opacity:1}}
-  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+body{
+  background:#0f172a;
+  font-family:Arial;
+  color:white;
+  padding:20px;
+}
+.container{
+  max-width:600px;
+  margin:auto;
+}
+h2{
+  text-align:center;
+}
+input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  margin:15px 0;
+}
+button{
+  width:100%;
+  padding:14px;
+  background:#ff3b5c;
+  border:none;
+  border-radius:10px;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+}
+button:disabled{
+  opacity:0.6;
+}
+.card{
+  background:#1e293b;
+  padding:12px;
+  border-radius:12px;
+  margin-top:20px;
+}
+video,img{
+  width:100%;
+  border-radius:10px;
+}
+a{
+  display:block;
+  margin-top:8px;
+  color:#22c55e;
+  font-weight:bold;
+}
+.error{
+  color:#ff4d4d;
+  text-align:center;
+  margin-top:15px;
+}
+.loader{
+  text-align:center;
+  margin-top:15px;
+}
 </style>
 </head>
-
 <body>
 
-<header>Desisavar</header>
+<div class="container">
 
-<div class="wrapper">
-  <div class="card">
+<h2>Multi-Platform PRO Downloader</h2>
 
-    <a class="btn terabox" href="javascript:void(0)" data-link="https://1024teradownloader.com/">
-      <i class="fa-solid fa-cloud-arrow-down"></i>
-      Terabox Video Downloader
-    </a>
+<input type="text" id="url" placeholder="Paste Instagram / YouTube / Facebook URL">
 
-    <a class="btn instagram" href="javascript:void(0)" data-link="https://igram.world">
-      <i class="fa-brands fa-instagram"></i>
-      Instagram Video Downloader
-    </a>
+<button id="btn" onclick="download()">Download</button>
 
-    <a class="btn youtube" href="javascript:void(0)" data-link="https://turboscribe.ai/downloader/youtube/video">
-      <i class="fa-brands fa-youtube"></i>
-      YouTube Video Downloader
-    </a>
+<div class="loader" id="loader"></div>
+<div class="error" id="error"></div>
+<div id="result"></div>
 
-    <a class="btn facebook" href="javascript:void(0)" data-link="https://snapsave.app/">
-      <i class="fa-brands fa-facebook-f"></i>
-      Facebook Video Downloader
-    </a>
-
-    <a class="btn twitter" href="javascript:void(0)" data-link="https://sssx.io/">
-      <i class="fa-brands fa-x-twitter"></i>
-      Twitter (X) Downloader
-    </a>
-
-    <a class="btn tiktok" href="javascript:void(0)" data-link="https://ssstik.io/in">
-      <i class="fa-brands fa-tiktok"></i>
-      TikTok Video Downloader
-    </a>
-
-    <a class="btn snapchat" href="javascript:void(0)" data-link="https://postsyncer.com/tools/snapchat-video-downloader">
-      <i class="fa-brands fa-snapchat"></i>
-      Snapchat Video Downloader
-    </a>
-
-    <a class="btn pinterest" href="javascript:void(0)" data-link="https://pindown.io/en1">
-      <i class="fa-brands fa-pinterest"></i>
-      Pinterest Video Downloader
-    </a>
-
-    <a class="btn whatsapp" href="javascript:void(0)" data-link="https://groupda.com">
-      <i class="fa-brands fa-whatsapp"></i>
-      WhatsApp Groups Link
-    </a>
-
-    <a class="btn telegram" href="javascript:void(0)" data-link="https://groupda.com/telegram">
-      <i class="fa-brands fa-telegram"></i>
-      Telegram Groups Link
-    </a>
-
-  </div>
-</div>
-
-<!-- Unlock Popup -->
-<div id="unlock-popup" class="unlock-overlay">
-  <div class="unlock-box">
-    <h3>Unlock Content 🔓</h3>
-
-    <p>
-      Continue दबाने पर sponsor page खुलेगा — फिर वापस आकर app इस्तेमाल करें।
-    </p>
-
-    <button id="continue-btn" class="unlock-primary">
-      Continue
-    </button>
-  </div>
-</div>
-
-<!-- Toast -->
-<div id="toast" class="toast">
-  ✅ Unlocked successfully
 </div>
 
 <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/sw.js");
-  }
 
-  const popup = document.getElementById("unlock-popup");
-  const continueBtn = document.getElementById("continue-btn");
-  const toast = document.getElementById("toast");
+async function download(){
 
-  const AD_LINK =
-    "https://www.effectivegatecpm.com/yvc33vhcr?key=392e8fc7e7a5aa8ee592724f8804ce9a";
+  const btn = document.getElementById("btn");
+  const url = document.getElementById("url").value.trim();
+  const loader = document.getElementById("loader");
+  const error = document.getElementById("error");
+  const result = document.getElementById("result");
 
-  let unlocked = false;
-  let pendingLink = null;
+  error.innerText="";
+  result.innerHTML="";
+  loader.innerText="Processing...";
+  btn.disabled=true;
 
-  const today = new Date().toDateString();
-  const lastUnlock = localStorage.getItem("desisavar_unlock_date");
+  try{
 
-  if (lastUnlock === today) unlocked = true;
-
-  function showToast(text, success = true) {
-    toast.innerText = text;
-    success ? toast.classList.remove("error") : toast.classList.add("error");
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 2500);
-  }
-
-  function isOffline() {
-    return !navigator.onLine;
-  }
-
-  window.addEventListener("offline", () =>
-    showToast("⚠️ You are offline", false)
-  );
-  window.addEventListener("online", () =>
-    showToast("✅ Back online", true)
-  );
-
-  function lockBack() {
-    history.pushState(null, "", location.href);
-    window.onpopstate = () => history.pushState(null, "", location.href);
-  }
-
-  function unlockBack() {
-    window.onpopstate = null;
-  }
-
-  document.querySelectorAll(".btn").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      if (isOffline()) {
-        showToast("⚠️ Internet connection required", false);
-        return;
-      }
-
-      const link = btn.getAttribute("data-link");
-      if (!link) return;
-
-      if (unlocked) {
-        window.open(link, "_blank");
-        return;
-      }
-
-      pendingLink = link;
-      popup.style.display = "flex";
-      lockBack();
+    const res = await fetch("https://alldown.yaartunah.workers.dev/",{
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ video_url:url })
     });
-  });
 
-  continueBtn.addEventListener("click", () => {
-    if (isOffline()) {
-      showToast("⚠️ Internet connection required", false);
-      return;
+    const data = await res.json();
+    loader.innerText="";
+    btn.disabled=false;
+
+    if(data.success===1){
+
+      const items = data.data || data.message?.data;
+
+      items.forEach((item,i)=>{
+
+        const card = document.createElement("div");
+        card.className="card";
+
+        if(item.type==="video" || item.url.includes(".mp4")){
+          card.innerHTML=`
+            <video src="${item.url}" controls></video>
+            <a href="${item.url}" target="_blank">
+            ⬇ Download Video</a>
+          `;
+        }else{
+          card.innerHTML=`
+            <img src="${item.url}">
+            <a href="${item.url}" target="_blank">
+            ⬇ Download Image</a>
+          `;
+        }
+
+        result.appendChild(card);
+      });
+
+    }else{
+      error.innerText=data.message || "Download failed";
     }
 
-    window.open(AD_LINK, "_blank");
+  }catch(e){
+    loader.innerText="";
+    btn.disabled=false;
+    error.innerText="Worker error";
+  }
+}
 
-    unlocked = true;
-    localStorage.setItem("desisavar_unlock_date", today);
-
-    popup.style.display = "none";
-    unlockBack();
-
-    showToast("✅ Unlocked successfully", true);
-  });
 </script>
 
 </body>
