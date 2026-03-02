@@ -82,7 +82,6 @@ transition:.25s;
 .pinterest{background:#e60023}
 .telegram{background:#229ED9}
 
-/* Ad Section */
 #bodyAdContainer{
 display:none;
 margin:20px 0;
@@ -90,7 +89,6 @@ text-align:center;
 width:100%;
 }
 
-/* Floating Badge */
 #comboBadge{
 position:fixed;
 right:14px;
@@ -169,7 +167,6 @@ Snapchat Video Downloader
 Pinterest Video Downloader
 </a>
 
-<!-- ✅ NEW AI BUTTON (Telegram ke upar) -->
 <a class="btn ai-tools" href="https://buttons-dlq.pages.dev/aitools" target="_blank">
 <i class="fa-solid fa-robot"></i>
 All AI Tools – Daily Use 🤖
@@ -182,7 +179,6 @@ Telegram Updates Channel
 
 </div>
 
-<!-- Body Ad -->
 <div id="bodyAdContainer">
 <script type="text/javascript">
 atOptions = {
@@ -203,6 +199,7 @@ atOptions = {
 </div>
 
 <script>
+
 if ("serviceWorker" in navigator) {
 navigator.serviceWorker.register("/sw.js");
 }
@@ -210,6 +207,24 @@ navigator.serviceWorker.register("/sw.js");
 /* 🔥 TRACKING */
 const TRACK_API="https://admin.yaartunah.workers.dev/?action=track&type=";
 fetch(TRACK_API+"visit").catch(()=>{});
+
+/* 🔥 INTERSTITIAL FUNCTION */
+function showInterstitialAd(){
+  (function(s){
+    s.dataset.zone='10162932',
+    s.src='https://groleegni.net/vignette.min.js'
+  })([document.documentElement, document.body]
+  .filter(Boolean)
+  .pop()
+  .appendChild(document.createElement('script')));
+}
+
+/* 🔥 APPLY TO ALL BUTTONS */
+document.querySelectorAll(".btn").forEach(btn=>{
+  btn.addEventListener("click", function(){
+    showInterstitialAd();
+  });
+});
 
 /* Badge */
 const combo=document.getElementById("comboBadge");
