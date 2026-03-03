@@ -2,146 +2,205 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Multi-Platform PRO Downloader</title>
+<title>Instagram Video Downloader</title>
 
 <style>
 body{
-  background:#0f172a;
-  font-family:Arial;
+  margin:0;
+  font-family:Arial, sans-serif;
+  background: linear-gradient(135deg,#4f46e5,#ec4899);
   color:white;
-  padding:20px;
 }
+
 .container{
-  max-width:600px;
+  max-width:500px;
   margin:auto;
-}
-h2{
+  padding:20px;
   text-align:center;
 }
-input{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:none;
-  margin:15px 0;
+
+h1{
+  margin-top:40px;
+  font-size:28px;
 }
-button{
-  width:100%;
-  padding:14px;
-  background:#ff3b5c;
+
+p{
+  opacity:0.9;
+  margin-bottom:25px;
+}
+
+.input-box{
+  background:white;
+  border-radius:12px;
+  display:flex;
+  padding:8px;
+}
+
+.input-box input{
+  flex:1;
   border:none;
-  border-radius:10px;
-  color:white;
-  font-size:16px;
+  outline:none;
+  font-size:14px;
+  padding:10px;
+}
+
+.input-box button{
+  background:#e9d5ff;
+  border:none;
+  border-radius:8px;
+  padding:8px 12px;
   cursor:pointer;
 }
-button:disabled{
+
+.download-btn{
+  width:100%;
+  margin-top:15px;
+  background:#16a34a;
+  color:white;
+  border:none;
+  padding:14px;
+  font-size:16px;
+  border-radius:12px;
+  cursor:pointer;
+}
+
+.download-btn:disabled{
   opacity:0.6;
 }
-.card{
-  background:#1e293b;
-  padding:12px;
-  border-radius:12px;
-  margin-top:20px;
+
+.result{
+  margin-top:25px;
 }
+
+.card{
+  background:white;
+  color:black;
+  border-radius:12px;
+  padding:12px;
+  margin-top:15px;
+}
+
 video,img{
   width:100%;
   border-radius:10px;
 }
+
 a{
   display:block;
   margin-top:8px;
-  color:#22c55e;
+  text-decoration:none;
+  color:#16a34a;
   font-weight:bold;
 }
+
 .error{
-  color:#ff4d4d;
-  text-align:center;
   margin-top:15px;
+  color:#ffe4e6;
 }
 .loader{
-  text-align:center;
   margin-top:15px;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
-<h2>Multi-Platform PRO Downloader</h2>
+<h1>Instagram Video Downloader</h1>
+<p>Download Instagram Videos, Reels & Photos easily</p>
 
-<input type="text" id="url" placeholder="Paste Instagram / YouTube / Facebook URL">
+<div class="input-box">
+  <input type="text" id="url" placeholder="Paste Instagram URL">
+  <button onclick="paste()">Paste</button>
+</div>
 
-<button id="btn" onclick="download()">Download</button>
+<button class="download-btn" id="btn" onclick="download()">
+  ⬇ Download
+</button>
 
 <div class="loader" id="loader"></div>
 <div class="error" id="error"></div>
-<div id="result"></div>
+<div class="result" id="result"></div>
 
 </div>
 
 <script>
 
+function paste(){
+  navigator.clipboard.readText()
+    .then(text => {
+      document.getElementById("url").value = text;
+    });
+}
+
 async function download(){
 
-  const btn = document.getElementById("btn");
-  const url = document.getElementById("url").value.trim();
-  const loader = document.getElementById("loader");
-  const error = document.getElementById("error");
-  const result = document.getElementById("result");
+  const btn=document.getElementById("btn");
+  const url=document.getElementById("url").value.trim();
+  const loader=document.getElementById("loader");
+  const error=document.getElementById("error");
+  const result=document.getElementById("result");
 
   error.innerText="";
   result.innerHTML="";
   loader.innerText="Processing...";
   btn.disabled=true;
 
+  if(!url.includes("instagram")){
+    loader.innerText="";
+    btn.disabled=false;
+    error.innerText="Please enter a valid Instagram URL";
+    return;
+  }
+
   try{
 
-    const res = await fetch("https://alldown.yaartunah.workers.dev/",{
+    const res=await fetch("https://alldown.yaartunah.workers.dev/",{
       method:"POST",
       headers:{ "Content-Type":"application/json" },
-      body: JSON.stringify({ video_url:url })
+      body:JSON.stringify({video_url:url})
     });
 
-    const data = await res.json();
+    const data=await res.json();
+
     loader.innerText="";
     btn.disabled=false;
 
-    if(data.success===1){
-
-      const items = data.data || data.message?.data;
-
-      items.forEach((item,i)=>{
-
-        const card = document.createElement("div");
-        card.className="card";
-
-        if(item.type==="video" || item.url.includes(".mp4")){
-          card.innerHTML=`
-            <video src="${item.url}" controls></video>
-            <a href="${item.url}" target="_blank">
-            ⬇ Download Video</a>
-          `;
-        }else{
-          card.innerHTML=`
-            <img src="${item.url}">
-            <a href="${item.url}" target="_blank">
-            ⬇ Download Image</a>
-          `;
-        }
-
-        result.appendChild(card);
-      });
-
-    }else{
+    if(!data.success){
       error.innerText=data.message || "Download failed";
+      return;
     }
+
+    const items=data.data || data.message?.data;
+
+    if(!items || !items.length){
+      error.innerText="No media found";
+      return;
+    }
+
+    items.forEach(item=>{
+
+      const card=document.createElement("div");
+      card.className="card";
+
+      card.innerHTML=`
+        ${item.url.includes(".mp4")
+          ? `<video src="${item.url}" controls></video>`
+          : `<img src="${item.url}">`
+        }
+        <a href="${item.url}" target="_blank">
+          ⬇ Download
+        </a>
+      `;
+
+      result.appendChild(card);
+    });
 
   }catch(e){
     loader.innerText="";
     btn.disabled=false;
-    error.innerText="Worker error";
+    error.innerText="Server error";
   }
 }
 
