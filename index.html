@@ -9,19 +9,6 @@
 <meta name="theme-color" content="#3248f5">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- 🔥 OneSignal SDK -->
-<script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
-<script>
-window.OneSignalDeferred = window.OneSignalDeferred || [];
-OneSignalDeferred.push(async function(OneSignal) {
-  await OneSignal.init({
-    appId: "e86af341-20e6-480f-8650-09a42abd5b51",
-    notifyButton: { enable: false },
-    autoResubscribe: true
-  });
-});
-</script>
-
 <style>
 *{box-sizing:border-box}
 body{
@@ -208,24 +195,6 @@ navigator.serviceWorker.register("/sw.js");
 const TRACK_API="https://admin.yaartunah.workers.dev/?action=track&type=";
 fetch(TRACK_API+"visit").catch(()=>{});
 
-/* 🔥 INTERSTITIAL FUNCTION */
-function showInterstitialAd(){
-  (function(s){
-    s.dataset.zone='10162932',
-    s.src='https://groleegni.net/vignette.min.js'
-  })([document.documentElement, document.body]
-  .filter(Boolean)
-  .pop()
-  .appendChild(document.createElement('script')));
-}
-
-/* 🔥 APPLY TO ALL BUTTONS */
-document.querySelectorAll(".btn").forEach(btn=>{
-  btn.addEventListener("click", function(){
-    showInterstitialAd();
-  });
-});
-
 /* Badge */
 const combo=document.getElementById("comboBadge");
 const icon=document.getElementById("comboIcon");
@@ -261,7 +230,7 @@ await deferredPrompt.userChoice;
 deferredPrompt=null;
 });
 
-/* 🔥 ALL ADS AFTER 5 SECONDS */
+/* 🔥 ADS AFTER 5 SECONDS */
 setTimeout(()=>{
 document.getElementById("bodyAdContainer").style.display="block";
 
@@ -274,15 +243,6 @@ const div1=document.createElement("div");
 div1.id="container-546f6bc9178f50dbe958ddc959944152";
 document.body.appendChild(div1);
 
-},5000);
-
-/* Chrome Notification after 5 sec */
-setTimeout(()=>{
-if(Notification.permission==="default"){
-OneSignalDeferred.push(async function(OneSignal){
-await OneSignal.Notifications.requestPermission();
-});
-}
 },5000);
 
 </script>
