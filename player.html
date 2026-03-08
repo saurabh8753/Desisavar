@@ -1,377 +1,174 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SnapInsta - Downloader</title>
+<title>Instagram Video Downloader</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
 <style>
+
 *{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Segoe UI, sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Segoe UI, sans-serif;
 }
 
 body{
-  background:linear-gradient(135deg,#4f46e5,#9333ea,#ec4899);
-  min-height:100vh;
-  color:white;
+background:linear-gradient(135deg,#4f46e5,#9333ea,#ec4899);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#fff;
 }
 
-/* Top Bar */
-.topbar{
-  background:#4338ca;
-  padding:14px 18px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font-weight:600;
+.container{
+width:95%;
+max-width:500px;
+background:#ffffff10;
+backdrop-filter:blur(10px);
+border-radius:15px;
+padding:25px;
+text-align:center;
+box-shadow:0 10px 40px rgba(0,0,0,0.2);
 }
 
-.topbar span{
-  font-size:18px;
+h1{
+margin-bottom:20px;
+font-size:24px;
 }
 
-/* Hero */
-.hero{
-  text-align:center;
-  padding:40px 20px 20px;
+input{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+margin-bottom:15px;
+font-size:15px;
 }
 
-.hero h1{
-  font-size:30px;
+button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+background:#fff;
+color:#333;
+font-weight:bold;
+cursor:pointer;
+font-size:16px;
 }
 
-.hero p{
-  margin-top:10px;
-  opacity:0.9;
-  font-size:15px;
+button:hover{
+background:#eee;
 }
 
-/* Glass Card */
-.card{
-  max-width:500px;
-  margin:20px auto;
-  padding:20px;
-  border-radius:25px;
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(20px);
-}
-
-/* Input */
-.input-box{
-  display:flex;
-  background:white;
-  border-radius:14px;
-  overflow:hidden;
-}
-
-.input-box input{
-  flex:1;
-  border:none;
-  padding:14px;
-  font-size:14px;
-  outline:none;
-}
-
-.input-box button{
-  background:#f3e8ff;
-  border:none;
-  padding:0 15px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-/* MAIN PROFESSIONAL BUTTON */
-.download-btn{
-  margin-top:18px;
-  width:100%;
-  padding:16px;
-  border:none;
-  border-radius:16px;
-  font-size:16px;
-  font-weight:600;
-  cursor:pointer;
-  color:white;
-  background:linear-gradient(90deg,#22c55e,#16a34a);
-  box-shadow:0 8px 20px rgba(34,197,94,0.4);
-  transition:all 0.25s ease;
-}
-
-.download-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 25px rgba(34,197,94,0.5);
-}
-
-.download-btn:active{
-  transform:scale(0.98);
-}
-
-.download-btn.loading{
-  background:linear-gradient(90deg,#4f46e5,#9333ea);
-}
-
-.download-btn:disabled{
-  opacity:0.7;
-}
-
-.btn-content{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-}
-
-/* Spinner */
 .loader{
-  margin-top:15px;
-  text-align:center;
+margin-top:20px;
+display:none;
 }
 
-.spinner{
-  width:28px;
-  height:28px;
-  border:4px solid rgba(255,255,255,0.3);
-  border-top:4px solid white;
-  border-radius:50%;
-  animation:spin 0.6s linear infinite;
-  margin:auto;
-}
-
-@keyframes spin{
-  0%{transform:rotate(0deg);}
-  100%{transform:rotate(360deg);}
-}
-
-/* Result */
 .result{
-  margin-top:20px;
+margin-top:20px;
+display:none;
 }
 
-.media-card{
-  background:white;
-  border-radius:20px;
-  padding:15px;
-  margin-top:20px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.15);
+.result img{
+width:100%;
+border-radius:10px;
+margin-bottom:15px;
 }
 
-.media-wrapper{
-  position:relative;
-  border-radius:18px;
-  overflow:hidden;
+.download{
+display:block;
+background:#22c55e;
+padding:12px;
+border-radius:10px;
+color:white;
+text-decoration:none;
+font-weight:bold;
 }
 
-.thumb-img{
-  width:100%;
-  border-radius:18px;
+.download:hover{
+background:#16a34a;
 }
 
-.media-wrapper video{
-  width:100%;
-  display:none;
-  border-radius:18px;
-}
-
-.play-btn{
-  position:absolute;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:rgba(0,0,0,0.65);
-  width:65px;
-  height:65px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:26px;
-  color:white;
-  cursor:pointer;
-}
-
-/* PROFESSIONAL VIDEO DOWNLOAD BUTTON */
-.pro-download-btn{
-  display:block;
-  margin-top:15px;
-  padding:14px;
-  border-radius:30px;
-  text-align:center;
-  text-decoration:none;
-  font-weight:600;
-  color:#16a34a;
-  background:linear-gradient(145deg,#f9fafb,#e5e7eb);
-  box-shadow:0 6px 15px rgba(0,0,0,0.1);
-  transition:all 0.25s ease;
-}
-
-.pro-download-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 10px 20px rgba(0,0,0,0.15);
-}
-
-.pro-download-btn:active{
-  transform:scale(0.97);
-}
-
-.dl-content{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-}
-
-.dl-icon{
-  font-size:18px;
-}
-
-.error{
-  margin-top:15px;
-  color:#ffe4e6;
-  text-align:center;
-}
 </style>
 </head>
 
 <body>
 
-<div class="topbar">
-  <span>SnapInsta</span>
+<div class="container">
+
+<h1><i class="fa-brands fa-instagram"></i> Instagram Downloader</h1>
+
+<input type="text" id="url" placeholder="Paste Instagram Reel / Post Link">
+
+<button onclick="downloadVideo()">
+<i class="fa-solid fa-download"></i> Get Video
+</button>
+
+<div class="loader" id="loader">
+<i class="fa fa-spinner fa-spin"></i> Fetching Video...
 </div>
 
-<div class="hero">
-  <h1>Instagram Video Downloader</h1>
-  <p>Download Instagram, YouTube, Facebook videos instantly</p>
+<div class="result" id="result">
+<img id="thumb">
+<a id="downloadBtn" class="download">
+<i class="fa fa-download"></i> Download Video
+</a>
 </div>
-
-<div class="card">
-
-  <div class="input-box">
-    <input type="text" id="url" placeholder="Paste URL here">
-    <button onclick="paste()">Paste</button>
-  </div>
-
-  <button class="download-btn" id="btn" onclick="download()">
-    <span class="btn-content">
-      <span>⬇</span>
-      <span class="text">Download</span>
-    </span>
-  </button>
-
-  <div class="loader" id="loader"></div>
-  <div class="error" id="error"></div>
-  <div class="result" id="result"></div>
 
 </div>
 
 <script>
 
-function paste(){
-  navigator.clipboard.readText()
-  .then(text=>{
-    document.getElementById("url").value=text;
-  });
+async function downloadVideo(){
+
+let url=document.getElementById("url").value;
+
+if(!url){
+alert("Paste Instagram Link");
+return;
 }
 
-async function download(){
+document.getElementById("loader").style.display="block";
+document.getElementById("result").style.display="none";
 
-  const btn=document.getElementById("btn");
-  const btnText=btn.querySelector(".text");
-  const url=document.getElementById("url").value.trim();
-  const loader=document.getElementById("loader");
-  const error=document.getElementById("error");
-  const result=document.getElementById("result");
+let api="https://universaldownloader-zeta.vercel.app/api/meta/download?url="+encodeURIComponent(url);
 
-  error.innerText="";
-  result.innerHTML="";
-  loader.innerHTML='<div class="spinner"></div>';
+try{
 
-  btn.disabled=true;
-  btn.classList.add("loading");
-  btnText.innerText="Processing...";
+let res=await fetch(api);
+let data=await res.json();
 
-  try{
+if(data.success){
 
-    const res=await fetch("https://alldown.yaartunah.workers.dev/",{
-      method:"POST",
-      headers:{ "Content-Type":"application/json" },
-      body:JSON.stringify({video_url:url})
-    });
+let video=data.data.data[0].url;
+let thumb=data.data.data[0].thumbnail;
 
-    const data=await res.json();
+document.getElementById("thumb").src=thumb;
+document.getElementById("downloadBtn").href=video;
 
-    loader.innerHTML="";
-    btn.disabled=false;
-    btn.classList.remove("loading");
-    btnText.innerText="Download";
+document.getElementById("result").style.display="block";
 
-    if(data.success===1){
+}else{
 
-      const items=data.data || data.message?.data || [];
+alert("Video fetch failed");
 
-      items.forEach(item=>{
+}
 
-        const card=document.createElement("div");
-        card.className="media-card";
+}catch(e){
 
-        const videoUrl=item.url;
-        const thumb=item.thumbnail || "";
+alert("Error loading video");
 
-        if(item.type==="video" || videoUrl.includes(".mp4")){
+}
 
-          card.innerHTML=`
-            <div class="media-wrapper">
-              ${thumb ? `<img src="${thumb}" class="thumb-img">` : ""}
-              <div class="play-btn">▶</div>
-              <video src="${videoUrl}" controls></video>
-            </div>
-            <a href="${videoUrl}" target="_blank" class="pro-download-btn">
-              <span class="dl-content">
-                <span class="dl-icon">⬇</span>
-                <span>Download Video</span>
-              </span>
-            </a>
-          `;
+document.getElementById("loader").style.display="none";
 
-        }else{
-
-          card.innerHTML=`
-            <img src="${videoUrl}" class="thumb-img">
-            <a href="${videoUrl}" target="_blank" class="pro-download-btn">
-              <span class="dl-content">
-                <span class="dl-icon">⬇</span>
-                <span>Download Image</span>
-              </span>
-            </a>
-          `;
-        }
-
-        result.appendChild(card);
-      });
-
-      document.querySelectorAll(".play-btn").forEach(btn=>{
-        btn.addEventListener("click",function(){
-          const wrapper=this.parentElement;
-          const img=wrapper.querySelector("img");
-          const video=wrapper.querySelector("video");
-          if(img) img.style.display="none";
-          this.style.display="none";
-          video.style.display="block";
-          video.play();
-        });
-      });
-
-    }else{
-      error.innerText=data.message || "Download failed";
-    }
-
-  }catch(e){
-    loader.innerHTML="";
-    btn.disabled=false;
-    btn.classList.remove("loading");
-    btnText.innerText="Download";
-    error.innerText="Worker error";
-  }
 }
 
 </script>
